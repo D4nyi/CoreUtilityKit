@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>CoreUtilityKit.UnitTests</PackageId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\CoreUtilityKit\CoreUtilityKit.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="CoreUtilityKit" />
+        <Using Include="CoreUtilityKit.Helpers" />
+    </ItemGroup>
+    
+</Project>

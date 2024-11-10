@@ -1,0 +1,25 @@
+name: "Build & Test"
+description: "Builds and Tests the C# source generator"
+
+inputs:
+  configuration:
+    description: 'Build configuration, e.g.: Debug, Release'
+    required: true
+    default: 'Debug'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+      shell: bash
+    - name: Build
+      run: dotnet build --no-restore -c ${{ inputs.configuration }}
+      shell: bash
+    - name: Unit Tests
+      run: dotnet test --no-build -c ${{ inputs.configuration }}
+      shell: bash

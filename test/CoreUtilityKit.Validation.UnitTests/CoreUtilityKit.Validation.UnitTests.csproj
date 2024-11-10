@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>CoreUtilityKit.Validation.UnitTests</PackageId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\CoreUtilityKit.Validation\CoreUtilityKit.Validation.csproj" />
+    </ItemGroup>
+
+</Project>

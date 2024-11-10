@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>CoreUtilityKit.EnumAttributionCache.UnitTests</PackageId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\CoreUtilityKit.EnumAttributeCache\CoreUtilityKit.EnumAttributionCache.csproj" />
+    </ItemGroup>
+    
+</Project>
