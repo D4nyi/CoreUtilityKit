@@ -118,6 +118,7 @@ public static class StringUtils
             {
                 continue;
             }
+
             isStartOfString = false;
 
             if (Rune.GetUnicodeCategory(runeChar) == UnicodeCategory.NonSpacingMark)

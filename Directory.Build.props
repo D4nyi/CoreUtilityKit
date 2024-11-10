@@ -19,9 +19,9 @@
 
     <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests')) == false">
         <DefineConstants>$(DefineConstants);$(Constants)</DefineConstants>
-        
+
         <Authors>Dániel Szöllősi</Authors>
-        
+
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
 
@@ -35,11 +35,11 @@
         <PublishRepositoryUrl>True</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-        
+
         <PackageTags>CoreUtilityKit, Utilities, Helpers, Validation</PackageTags>
         <RepositoryUrl>https://github.com/D4nyi/CoreUtilityKit</RepositoryUrl>
         <PackageProjectUrl>https://github.com/D4nyi/CoreUtilityKit</PackageProjectUrl>
-		<RepositoryType>git</RepositoryType>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
@@ -51,13 +51,9 @@
         <IsTestProject>True</IsTestProject>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="SecurityCodeScan.VS2019" />
-    </ItemGroup>
-    
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests')) == false">
-        <PackageReference Include="Microsoft.SourceLink.GitHub" />
-        
+        <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
+
         <None Include="..\..\LICENSE.txt">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
@@ -69,15 +65,21 @@
     </ItemGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
-        <PackageReference Include="FluentAssertions" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="xunit" />
-        <PackageReference Include="xunit.runner.visualstudio" />
-        <PackageReference Include="coverlet.collector" />
-        <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
-        
-        <Using Include="Xunit" />
-        <Using Include="FluentAssertions" />
+        <PackageReference Include="FluentAssertions"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="xunit"/>
+        <PackageReference Include="xunit.runner.visualstudio">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing"/>
+
+        <Using Include="Xunit"/>
+        <Using Include="FluentAssertions"/>
     </ItemGroup>
-    
+
 </Project>
