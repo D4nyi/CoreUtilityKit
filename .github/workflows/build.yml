@@ -1,0 +1,23 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Build & Test
+
+on: [ push, pull_request ]
+
+env:
+  BUILD_CONFIGURATION: Debug
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
+jobs:
+  build_n_test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git
+        uses: actions/checkout@v4
+      - name: Build & Test
+        uses: D4nyi/NetUtilityKit/.github/actions/build-n-test@ceee9ea91b93aa92cfa54e523cf3301510de0305
+        with:
+          configuration: ${{ env.BUILD_CONFIGURATION }}
