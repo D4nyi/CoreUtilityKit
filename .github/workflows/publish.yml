@@ -29,33 +29,36 @@ jobs:
           echo "AllTags=${tags}" >> $GITHUB_ENV
       - name: Checkout Git
         uses: actions/checkout@v4
+      - name: Update Version
+        run: |
+          releaseYear=$(date -u +"%Y")
+          buildTime=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          versionCoreUtilityKit=$(sed -rn "s/\[assembly\: AssemblyVersion\(\"(.*)\"\)\]/\1/p" ./src/CoreUtilityKit/Properties/Assembly.cs)
+          sed -i -e "s/<Version>/${versionCoreUtilityKit}/" -e "s/<BuildTime>/${buildTime}/" -e "s/<ReleaseYear>/${releaseYear}/" ./src/CoreUtilityKit/Properties/Assembly.cs
+
+          versionValidation=$(sed -rn "s/\[assembly\: AssemblyVersion\(\"(.*)\"\)\]/\1/p" ./src/CoreUtilityKit.Validation/Properties/Assembly.cs)
+          sed -i -e "s/<Version>/${versionValidation}/" -e "s/<BuildTime>/${buildTime}/" -e "s/<ReleaseYear>/${releaseYear}/" ./src/CoreUtilityKit.Validation/Properties/Assembly.cs
+
+          echo "CoreUtilityKit=${versionCoreUtilityKit}" >> $GITHUB_ENV
+          echo "Validation=${versionValidation}" >> $GITHUB_ENV
       - name: Build & Test
         uses: D4nyi/CoreUtilityKit/.github/actions/build-n-test@ceee9ea91b93aa92cfa54e523cf3301510de0305
         with:
           configuration: ${{ env.BUILD_CONFIGURATION }}
       - name: Pack CoreUtilityKit
-        run: dotnet pack ./src/CoreUtilityKit/CoreUtilityKit.csproj -c Release --no-restore -o output
+        run: dotnet pack ./src/CoreUtilityKit/CoreUtilityKit.csproj -c Release --no-build --no-restore --nologo -o output /p:PackageVersion=${{ env.CoreUtilityKit }}
       - name: Pack CoreUtilityKit.Validation
-        run: dotnet pack ./src/CoreUtilityKit.Validation/CoreUtilityKit.Validation.csproj -c Release --no-restore -o output
-      - name: Update Version
-        run: |
-          releaseYear=$(date -u +"%Y")
-          buildTime=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          versionCoreUtilityKit=$(sed -rn "s/\[assembly\: AssemblyVersion\(\"(.*)\"\)\]/\1/p" ./src/CoreUtilityKit/Properties/Assembly.cs)
-          sed -i -e "s/<Version>/${versionCoreUtilityKit}/" -e "s/<BuildTime>/${buildTime}/" -e "s/<ReleaseYear>/${releaseYear}/" ./src/CoreUtilityKit/Properties/Assembly.cs
-          
-          buildTime=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          versionValidation=$(sed -rn "s/\[assembly\: AssemblyVersion\(\"(.*)\"\)\]/\1/p" ./src/CoreUtilityKit.Validation/Properties/Assembly.cs)
-          sed -i -e "s/<Version>/${versionValidation}/" -e "s/<BuildTime>/${buildTime}/" -e "s/<ReleaseYear>/${releaseYear}/" ./src/CoreUtilityKit.Validation/Properties/Assembly.cs
-          
-          versions="{\"CoreUtilityKit\":\"${versionCoreUtilityKit}\",\"Validation\":\"${versionValidation}\",\"EnumAttributionCache\":\"\"}"
-          echo "Versions=${versions}" >> $GITHUB_ENV
+        run: dotnet pack ./src/CoreUtilityKit.Validation/CoreUtilityKit.Validation.csproj -c Release --no-build --no-restore --nologo -o output /p:PackageVersion=${{ env.Validation }}
       - name: Git Tag
         uses: actions/github-script@v7
         with:
           script: |
             try {
-              const versions = JSON.parse(process.env.Versions);
+              const versions = {
+                CoreUtilityKit: process.env.CoreUtilityKit,
+                Validation:     process.env.Validation
+              };
               const allTags = JSON.parse(process.env.AllTags).map(x => x.ref);
             
               console.log(versions);
