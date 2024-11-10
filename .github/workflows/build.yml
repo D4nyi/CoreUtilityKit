@@ -18,6 +18,6 @@ jobs:
       - name: Checkout Git
         uses: actions/checkout@v4
       - name: Build & Test
-        uses: D4nyi/NetUtilityKit/.github/actions/build-n-test@ceee9ea91b93aa92cfa54e523cf3301510de0305
+        uses: D4nyi/CoreUtilityKit/.github/actions/build-n-test@ceee9ea91b93aa92cfa54e523cf3301510de0305
         with:
           configuration: ${{ env.BUILD_CONFIGURATION }}
