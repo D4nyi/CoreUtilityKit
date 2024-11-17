@@ -49,7 +49,7 @@ internal sealed class AgeHelperDateOnlyGenerator : TheoryData<DateOnly, int>
 {
     public AgeHelperDateOnlyGenerator()
     {
-        Add(DateOnly.FromDateTime(Constants.DateTimeUtc), Constants.Age);
+        Add(DateOnly.FromDateTime(Constants.DateTimeUtc.AddDays(-1)), Constants.Age);
         Add(DateOnly.FromDateTime(Constants.DateTime), Constants.Age);
     }
 }

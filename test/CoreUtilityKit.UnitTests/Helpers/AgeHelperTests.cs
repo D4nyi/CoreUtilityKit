@@ -17,6 +17,60 @@ public sealed class AgeHelperTests
     }
 
     [Theory]
+    [InlineData(0)]
+    [InlineData(30)]
+    [InlineData(150)]
+    public void CalculateDateTimeBirthYear_ValidAge_ReturnsCorrectYear(int age)
+    {
+        // Arrange
+        int expectedYear = DateTime.UtcNow.Year - age;
+        DateTime expected = new(expectedYear, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        // Act
+        DateTime result = _ageHelper.CalculateDateTimeBirthYear(age);
+
+        // Assert
+        result.Should().Be(expected);
+        result.Kind.Should().Be(expected.Kind);
+    }
+
+    [Fact]
+    public void CalculateDateTimeBirthYear_NegativeAge_ThrowsArgumentException()
+    {
+        // Arrange
+        Action action = () => _ageHelper.CalculateDateTimeBirthYear(-1);
+
+        // Act & Assert
+        action.Should().Throw<ArgumentOutOfRangeException>();
+    }
+    
+    [Theory]
+    [InlineData(0)]
+    [InlineData(30)]
+    [InlineData(150)]
+    public void CalculateBirthYear_ValidAge_ReturnsCorrectYear(int age)
+    {
+        // Arrange
+        int expected = DateTime.UtcNow.Year - age;
+
+        // Act
+        int result = _ageHelper.CalculateBirthYear(age);
+
+        // Assert
+        result.Should().Be(expected);
+    }
+
+    [Fact]
+    public void CalculateBirthYear_NegativeAge_ThrowsArgumentException()
+    {
+        // Arrange
+        Action action = () => _ageHelper.CalculateBirthYear(-1);
+
+        // Act & Assert
+        action.Should().Throw<ArgumentOutOfRangeException>();
+    }
+    
+    [Theory]
     [ClassData(typeof(AgeHelperDateTimeGenerator))]
     public void CalculateAge_DateTime_HappyCase(DateTime dateTime, int expectedAge)
     {

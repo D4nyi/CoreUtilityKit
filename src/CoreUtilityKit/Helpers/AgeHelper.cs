@@ -13,12 +13,19 @@ internal sealed class AgeHelper : IAgeHelper
 
     public DateTime CalculateDateTimeBirthYear(int age)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(age);
+        
         int birthYear = DateTime.UtcNow.AddYears(-age).Year;
 
         return new DateTime(birthYear, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     }
 
-    public int CalculateBirthYear(int age) => DateTime.UtcNow.AddYears(-age).Year;
+    public int CalculateBirthYear(int age)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(age);
+
+        return DateTime.UtcNow.AddYears(-age).Year;
+    }
 
     public int CalculateAge(DateTime birthDate) => CalculateAgeCore(birthDate.ToUniversalTime());
 
