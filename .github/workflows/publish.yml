@@ -43,7 +43,7 @@ jobs:
           echo "CoreUtilityKit=${versionCoreUtilityKit}" >> $GITHUB_ENV
           echo "Validation=${versionValidation}" >> $GITHUB_ENV
       - name: Build & Test
-        uses: D4nyi/CoreUtilityKit/.github/actions/build-n-test@ceee9ea91b93aa92cfa54e523cf3301510de0305
+        uses: D4nyi/CoreUtilityKit/.github/actions/build-n-test@dd01c63741330248b657d812e5f89c53ecf0cf40
         with:
           configuration: ${{ env.BUILD_CONFIGURATION }}
       - name: Pack CoreUtilityKit
