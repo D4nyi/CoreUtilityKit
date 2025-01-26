@@ -63,7 +63,7 @@ jobs:
             
               console.log(versions);
               console.log(allTags);
-            
+
               for (const [key, value] of Object.entries(versions)) {
                 if (!value) {
                   continue;
