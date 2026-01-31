@@ -6,7 +6,7 @@ namespace CoreUtilityKit.UnitTests.Text;
 
 public sealed class StringUtilTest
 {
-    private static readonly string[] _invalidChars = Path.GetInvalidFileNameChars().Select(x => x.ToString()).ToArray();
+    private static readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
 
     #region InlineData
     [Theory]
@@ -21,9 +21,9 @@ public sealed class StringUtilTest
         bool onlyUpper = normalizedString.All(Char.IsUpper);
 
         // Assert
-        onlyAscii.Should().BeTrue();
-        onlyUpper.Should().BeTrue();
-        _ = normalizedString.Should().HaveLength(value.Length);
+        onlyAscii.ShouldBeTrue();
+        onlyUpper.ShouldBeTrue();
+        normalizedString.Length.ShouldBe(value.Length);
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public sealed class StringUtilTest
         string normalizedString = email.NormalizeToUpper();
 
         // Assert
-        normalizedString.Should().Be(expectedOutput);
+        normalizedString.ShouldBe(expectedOutput);
     }
 
     #region InlineData
@@ -49,10 +49,10 @@ public sealed class StringUtilTest
     public void NormalizeToUpper_ShouldReturnEmptyString_WhenInvalidInput(string? input)
     {
         // Arrange && Act
-        Action act = () => input.NormalizeToUpper().Should().BeEmpty();
+        Action act = () => input.NormalizeToUpper().ShouldBeEmpty();
 
         // Assert
-        act.Should().NotThrow();
+        act.ShouldNotThrow();
     }
 
     #region InlineData
@@ -68,9 +68,9 @@ public sealed class StringUtilTest
         bool onlyLower = normalizedString.All(Char.IsLower);
 
         // Assert
-        onlyAscii.Should().BeTrue();
-        onlyLower.Should().BeTrue();
-        _ = normalizedString.Should().HaveLength(value.Length);
+        onlyAscii.ShouldBeTrue();
+        onlyLower.ShouldBeTrue();
+        normalizedString.Length.ShouldBe(value.Length);
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public sealed class StringUtilTest
         string normalizedString = email.NormalizeToLower();
 
         // Assert
-        normalizedString.Should().Be(expectedOutput);
+        normalizedString.ShouldBe(expectedOutput);
     }
 
     #region InlineData
@@ -96,10 +96,10 @@ public sealed class StringUtilTest
     public void NormalizeToLower_ShouldReturnEmptyString_WhenInvalidInput(string? input)
     {
         // Arrange && Act
-        Action act = () => input.NormalizeToLower().Should().BeEmpty();
+        Action act = () => input.NormalizeToLower().ShouldBeEmpty();
 
         // Assert
-        act.Should().NotThrow();
+        act.ShouldNotThrow();
     }
 
     #region InlineData
@@ -121,7 +121,7 @@ public sealed class StringUtilTest
         string slug = value.CreateSlug();
 
         // Assert
-        slug.Should().Be(expected);
+        slug.ShouldBe(expected);
     }
 
     [Fact]
@@ -134,7 +134,7 @@ public sealed class StringUtilTest
         string safePath = value.ReplaceInvalidFileChars();
 
         // Assert
-        safePath.Should().NotContainAny(_invalidChars);
+        safePath.ShouldNotContain(c => Array.IndexOf(_invalidChars, c) != -1);
     }
 
     #region InlineData
@@ -152,8 +152,8 @@ public sealed class StringUtilTest
         bool onlyAscii = Encoding.UTF8.GetByteCount(safePath) == safePath.Length;
 
         // Assert
-        onlyAscii.Should().BeTrue();
-        safePath.Should().NotContainAny(_invalidChars);
+        onlyAscii.ShouldBeTrue();
+        safePath.ShouldNotContain(c => Array.IndexOf(_invalidChars, c) != -1);
     }
 
     #region InlineData
@@ -165,9 +165,9 @@ public sealed class StringUtilTest
     public void ReplaceInvalidFileChars_ShouldReturnEmptyString_WhenInvalidInput(string? input)
     {
         // Arrange && Act
-        Action act = () => input.ReplaceInvalidFileChars().Should().BeEmpty();
+        Action act = () => input.ReplaceInvalidFileChars().ShouldBeEmpty();
 
         // Assert
-        act.Should().NotThrow();
+        act.ShouldNotThrow();
     }
 }

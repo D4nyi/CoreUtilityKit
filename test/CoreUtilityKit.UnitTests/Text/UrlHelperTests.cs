@@ -24,7 +24,7 @@ public sealed class UrlHelperTests
         string queryString = UrlHelper.ToQueryString(dict);
 
         // Assert
-        queryString.Should().Be(expectedResult);
+        queryString.ShouldBe(expectedResult);
     }
 
     [Theory]
@@ -35,7 +35,7 @@ public sealed class UrlHelperTests
         string queryString = UrlHelper.ToQueryString(dict);
 
         // Assert
-        queryString.Should().BeEmpty();
+        queryString.ShouldBeEmpty();
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public sealed class UrlHelperTests
         string queryString = UrlHelper.ToQueryString(dict);
 
         // Assert
-        queryString.Should().Be(expectedResult);
+        queryString.ShouldBe(expectedResult);
     }
 
     [Theory]
@@ -65,6 +65,6 @@ public sealed class UrlHelperTests
         string queryString = UrlHelper.ToQueryString(dict);
 
         // Assert
-        queryString.Should().BeEmpty();
+        queryString.ShouldBeEmpty();
     }
 }

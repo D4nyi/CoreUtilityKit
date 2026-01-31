@@ -2,9 +2,10 @@ namespace CoreUtilityKit.Validation.UnitTests;
 
 public sealed class GuardsThrowsTest
 {
-    private static readonly string[] _data = [ "test", "data" ];
+    private static readonly string[] _data = ["test", "data"];
 
     #region ThrowNumberOutOfRangeIf
+
     [Fact]
     public void ThrowNumberOutOfRangeIf_ShouldNotThrow_WhenDataIsValidAndPredicateIsFalse()
     {
@@ -15,7 +16,7 @@ public sealed class GuardsThrowsTest
         Action action = () => number.ThrowNumberOutOfRangeIf(x => x % 2 != 0);
 
         // Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -28,10 +29,9 @@ public sealed class GuardsThrowsTest
         Action action = () => number.ThrowNumberOutOfRangeIf(x => x % 2 == 0);
 
         // Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"The specified parameter is outside the processable range! (Parameter 'number')\r\nActual value was {number}.")
-            .WithParameterName(nameof(number));
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe($"The specified parameter is outside the processable range! (Parameter 'number')\r\nActual value was {number}.");
+        ex.ParamName.ShouldBe(nameof(number));
     }
 
     [Fact]
@@ -44,13 +44,15 @@ public sealed class GuardsThrowsTest
         Action action = () => number.ThrowNumberOutOfRangeIf(null!);
 
         // Assert
-        action.Should()
-            .Throw<ArgumentNullException>()
-            .WithParameterName("predicate");
+        action
+            .ShouldThrow<ArgumentNullException>()
+            .ParamName.ShouldBe("predicate");
     }
+
     #endregion
 
     #region ThrowIf Collection Count
+
     [Fact]
     public void ThrowIfEmpty_ShouldNotThrow_WhenNotEmpty()
     {
@@ -58,7 +60,7 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfEmpty();
 
         // Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -71,10 +73,9 @@ public sealed class GuardsThrowsTest
         Action action = () => list.ThrowIfEmpty();
 
         // Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithMessage("The collections length is out of range! (Parameter 'list')\r\nActual value was 0.")
-            .WithParameterName(nameof(list));
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe("The collections length is out of range! (Parameter 'list')\r\nActual value was 0.");
+        ex.ParamName.ShouldBe(nameof(list));
     }
 
     [Fact]
@@ -84,7 +85,7 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountEqualTo(0);
 
         // Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -94,10 +95,9 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountEqualTo(_data.Length);
 
         // Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.")
-            .WithParameterName(nameof(_data));
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.ParamName.ShouldBe(nameof(_data));
     }
 
     [Fact]
@@ -107,7 +107,7 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountNotEqualTo(_data.Length);
 
         // Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -117,10 +117,9 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountNotEqualTo(0);
 
         // Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.")
-            .WithParameterName(nameof(_data));
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.ParamName.ShouldBe(nameof(_data));
     }
 
     [Fact]
@@ -130,7 +129,7 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountIsGreaterThen(2);
 
         // Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -140,10 +139,9 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountIsGreaterThen(1);
 
         // Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.")
-            .WithParameterName(nameof(_data));
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.ParamName.ShouldBe(nameof(_data));
     }
 
     [Fact]
@@ -153,7 +151,7 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountIsLessThen(2);
 
         // Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -163,10 +161,9 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountIsLessThen(3);
 
         // Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.")
-            .WithParameterName(nameof(_data));
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.ParamName.ShouldBe(nameof(_data));
     }
 
     [Fact]
@@ -176,7 +173,7 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountIsGreaterThenOrEqualTo(3);
 
         // Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -186,10 +183,9 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountIsGreaterThenOrEqualTo(2);
 
         // Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.")
-            .WithParameterName(nameof(_data));
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.ParamName.ShouldBe(nameof(_data));
     }
 
     [Fact]
@@ -199,7 +195,7 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountIsLessThenOrEqualTo(1);
 
         // Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -209,10 +205,10 @@ public sealed class GuardsThrowsTest
         Action action = () => _data.ThrowIfCountIsLessThenOrEqualTo(3);
 
         // Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.")
-            .WithParameterName(nameof(_data));
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.ParamName.ShouldBe(nameof(_data));
     }
+
     #endregion
 }

@@ -15,7 +15,7 @@ public sealed class GuardsPasswordTests
 
         // Assert
 
-        success.Should().BeTrue();
+        success.ShouldBeTrue();
     }
 
     [Theory]
@@ -26,6 +26,6 @@ public sealed class GuardsPasswordTests
         bool success = Guards.ValidatePassword(password);
 
         // Assert
-        success.Should().BeFalse();
+        success.ShouldBeFalse();
     }
 }

@@ -15,18 +15,18 @@ public sealed class AgeHelperExtensionTests
         _services.AddAgeHelperWithTimeProvider();
 
         // Assert
-        _services.Count.Should().Be(2);
+        _services.Count.ShouldBe(2);
 
         ServiceDescriptor? descriptor = _services.FirstOrDefault(x => x.ServiceType == typeof(TimeProvider));
 
-        descriptor.Should().NotBeNull();
-        descriptor!.Lifetime.Should().Be(ServiceLifetime.Singleton);
+        descriptor.ShouldNotBeNull();
+        descriptor.Lifetime.ShouldBe(ServiceLifetime.Singleton);
 
         descriptor = _services.FirstOrDefault(x => x.ServiceType == typeof(IAgeHelper));
 
-        descriptor.Should().NotBeNull();
-        descriptor!.ImplementationType.Should().Be<AgeHelper>();
-        descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
+        descriptor.ShouldNotBeNull();
+        descriptor.ImplementationType.ShouldBeOfType<AgeHelper>();
+        descriptor.Lifetime.ShouldBe(ServiceLifetime.Singleton);
     }
 
     [Fact]
@@ -36,12 +36,12 @@ public sealed class AgeHelperExtensionTests
         _services.AddAgeHelper();
 
         // Assert
-        _services.Count.Should().Be(1);
+        _services.Count.ShouldBe(1);
 
         ServiceDescriptor? descriptor = _services.FirstOrDefault(x => x.ServiceType == typeof(IAgeHelper));
 
-        descriptor.Should().NotBeNull();
-        descriptor!.ImplementationInstance.Should().BeOfType<AgeHelper>();
-        descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
+        descriptor.ShouldNotBeNull();
+        descriptor.ImplementationInstance.ShouldBeOfType<AgeHelper>();
+        descriptor.Lifetime.ShouldBe(ServiceLifetime.Singleton);
     }
 }

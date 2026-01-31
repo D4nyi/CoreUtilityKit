@@ -12,7 +12,7 @@ public sealed class GuardsStringTests
         bool success = Guards.MinLength(value, minLength);
 
         // Assert
-        success.Should().Be(expectedResult);
+        success.ShouldBe(expectedResult);
     }
 
     [Theory]
@@ -23,7 +23,7 @@ public sealed class GuardsStringTests
         bool success = Guards.MaxLength(value, maxLength);
 
         // Assert
-        success.Should().Be(expectedResult);
+        success.ShouldBe(expectedResult);
     }
 
     [Theory]
@@ -34,7 +34,7 @@ public sealed class GuardsStringTests
         bool success = Guards.Between(value, minLength, LengthBaseGenerator.MaxLength);
 
         // Assert
-        success.Should().Be(expectedResult);
+        success.ShouldBe(expectedResult);
     }
 
     [Theory]
@@ -45,6 +45,6 @@ public sealed class GuardsStringTests
         bool success = Guards.ExactLength(value, length);
 
         // Assert
-        success.Should().Be(expectedResult);
+        success.ShouldBe(expectedResult);
     }
 }

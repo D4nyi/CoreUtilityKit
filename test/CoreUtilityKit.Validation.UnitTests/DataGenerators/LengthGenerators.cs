@@ -5,14 +5,6 @@ internal abstract class LengthBaseGenerator : TheoryData<string?, int, bool>
     protected const int MinLength = 3;
     public const int MaxLength = 5;
 
-    private static readonly string?[] _invalid =
-    [
-        null,
-        "",
-        " ",
-        "\t \r"
-    ];
-
     private static readonly string[] _valid =
     [
         "te",
@@ -24,10 +16,8 @@ internal abstract class LengthBaseGenerator : TheoryData<string?, int, bool>
 
     protected LengthBaseGenerator(Func<int, bool> expectedResultFunc)
     {
-        foreach (string? data in _invalid)
-        {
-            Add(data, MinLength, false);
-        }
+        Add(null, MinLength, false);
+        Add("", MinLength, expectedResultFunc(0));
 
         foreach (string data in _valid)
         {

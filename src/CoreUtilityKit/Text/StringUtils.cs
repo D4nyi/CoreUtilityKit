@@ -51,8 +51,7 @@ public static class StringUtils
                 if (Rune.GetUnicodeCategory(runeChar) != UnicodeCategory.NonSpacingMark)
                 {
                     span[i++] = IsLowerCaseAsciiLetter(runeChar.Value)
-                        ? (char)(byte)(runeChar.Value |
-                                       LoweringMask) // on x86, extending BYTE -> DWORD is more efficient than WORD -> DWORD
+                        ? (char)(byte)(runeChar.Value | LoweringMask) // on x86, extending BYTE -> DWORD is more efficient than WORD -> DWORD
                         : (char)runeChar.Value;
                 }
             }
@@ -112,6 +111,7 @@ public static class StringUtils
         bool isStartOfString = true;
         bool previousIsReplacer = false;
         int i = 0;
+
         foreach (Rune runeChar in phrase.EnumerateRunes())
         {
             if (isStartOfString && (Rune.IsWhiteSpace(runeChar) || runeChar.Value == Replacer))

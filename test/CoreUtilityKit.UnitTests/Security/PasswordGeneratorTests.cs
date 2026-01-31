@@ -17,7 +17,7 @@ public sealed class PasswordGeneratorTests
         Action action = () => PasswordGenerator.GeneratePassword(length, specialChars);
 
         // Assert
-        action.Should().Throw<ArgumentOutOfRangeException>();
+        action.ShouldThrow<ArgumentOutOfRangeException>();
     }
 
     [Theory]
@@ -32,7 +32,7 @@ public sealed class PasswordGeneratorTests
         Action action = () => PasswordGenerator.GeneratePassword(length, specialChars);
 
         // Assert
-        action.Should().Throw<ArgumentOutOfRangeException>();
+        action.ShouldThrow<ArgumentOutOfRangeException>();
     }
     #endregion
 
@@ -72,14 +72,9 @@ public sealed class PasswordGeneratorTests
 
     private static void AssertPassword(string password, int length)
     {
-        password.Should()
-            .NotBeNullOrEmpty()
-            .And
-            .MatchRegex(@"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}");
+        password.ShouldNotBeNullOrEmpty();
+        password.ShouldMatch(@"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}");
 
-        password.ToCharArray().Should()
-            .HaveCountGreaterThanOrEqualTo(length)
-            .And
-            .HaveCountLessThanOrEqualTo(length + 4);
+        password.Length.ShouldBeInRange(length, length + 4);
     }
 }

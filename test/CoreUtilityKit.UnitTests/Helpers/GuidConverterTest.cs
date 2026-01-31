@@ -16,8 +16,8 @@ public sealed class GuidConverterTest
         Guid result = GuidConverter.Parse(base64);
 
         // Assert
-        expected.Should().Be(_guid);
-        result.Should().Be(_guid);
+        expected.ShouldBe(_guid);
+        result.ShouldBe(_guid);
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public sealed class GuidConverterTest
         Guid result = GuidConverter.Parse(base64);
 
         // Assert
-        result.Should().Be(Guid.Empty);
+        result.ShouldBe(Guid.Empty);
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public sealed class GuidConverterTest
         Guid result = GuidConverter.Parse(base64);
 
         // Assert
-        result.Should().Be(Guid.Empty);
+        result.ShouldBe(Guid.Empty);
     }
 
     [Theory]
@@ -56,7 +56,7 @@ public sealed class GuidConverterTest
         Guid result = GuidConverter.Parse(base64);
 
         // Assert
-        result.Should().Be(Guid.Empty);
+        result.ShouldBe(Guid.Empty);
     }
     #endregion
 
@@ -71,7 +71,7 @@ public sealed class GuidConverterTest
         string result = GuidConverter.ToBase64String(_guid);
 
         // Assert
-        result.Should().Be(expectedBase64);
+        result.ShouldBe(expectedBase64);
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public sealed class GuidConverterTest
         string result = GuidConverter.ToBase64String(Guid.Empty);
 
         // Assert
-        result.Should().Be(expectedBase64);
+        result.ShouldBe(expectedBase64);
     }
     #endregion
 

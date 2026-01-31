@@ -13,7 +13,7 @@ public sealed class AgeHelperTests
         Action action = () => _ = new AgeHelper(null!);
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     [Theory]
@@ -30,8 +30,8 @@ public sealed class AgeHelperTests
         DateTime result = _ageHelper.CalculateDateTimeBirthYear(age);
 
         // Assert
-        result.Should().Be(expected);
-        result.Kind.Should().Be(expected.Kind);
+        result.ShouldBe(expected);
+        result.Kind.ShouldBe(expected.Kind);
     }
 
     [Fact]
@@ -41,9 +41,9 @@ public sealed class AgeHelperTests
         Action action = () => _ageHelper.CalculateDateTimeBirthYear(-1);
 
         // Act & Assert
-        action.Should().Throw<ArgumentOutOfRangeException>();
+        action.ShouldThrow<ArgumentOutOfRangeException>();
     }
-    
+
     [Theory]
     [InlineData(0)]
     [InlineData(30)]
@@ -57,7 +57,7 @@ public sealed class AgeHelperTests
         int result = _ageHelper.CalculateBirthYear(age);
 
         // Assert
-        result.Should().Be(expected);
+        result.ShouldBe(expected);
     }
 
     [Fact]
@@ -67,9 +67,9 @@ public sealed class AgeHelperTests
         Action action = () => _ageHelper.CalculateBirthYear(-1);
 
         // Act & Assert
-        action.Should().Throw<ArgumentOutOfRangeException>();
+        action.ShouldThrow<ArgumentOutOfRangeException>();
     }
-    
+
     [Theory]
     [ClassData(typeof(AgeHelperDateTimeGenerator))]
     public void CalculateAge_DateTime_HappyCase(DateTime dateTime, int expectedAge)
@@ -78,7 +78,7 @@ public sealed class AgeHelperTests
         int age = _ageHelper.CalculateAge(dateTime);
 
         // Assert
-        age.Should().Be(expectedAge);
+        age.ShouldBe(expectedAge);
     }
 
     [Fact]
@@ -92,8 +92,8 @@ public sealed class AgeHelperTests
         int ageAfterLeapDay = ageHelper.CalculateAge(Constants.DateTimeUtcLeapDay);
 
         // Assert
-        ageBeforeLeapDay.Should().Be(Constants.Age);
-        ageAfterLeapDay.Should().Be(Constants.AgeLeapDay);
+        ageBeforeLeapDay.ShouldBe(Constants.Age);
+        ageAfterLeapDay.ShouldBe(Constants.AgeLeapDay);
     }
 
     [Theory]
@@ -104,7 +104,7 @@ public sealed class AgeHelperTests
         int age = _ageHelper.CalculateAge(dateTimeOff);
 
         // Assert
-        age.Should().Be(expectedAge);
+        age.ShouldBe(expectedAge);
     }
 
     [Fact]
@@ -118,8 +118,8 @@ public sealed class AgeHelperTests
         int ageAfterLeapDay = ageHelper.CalculateAge(Constants.DateTimeOffsetUtcLeapDay);
 
         // Assert
-        ageBeforeLeapDay.Should().Be(Constants.Age);
-        ageAfterLeapDay.Should().Be(Constants.AgeLeapDay);
+        ageBeforeLeapDay.ShouldBe(Constants.Age);
+        ageAfterLeapDay.ShouldBe(Constants.AgeLeapDay);
     }
 
     [Theory]
@@ -130,7 +130,7 @@ public sealed class AgeHelperTests
         int age = _ageHelper.CalculateAge(dateOnly);
 
         // Assert
-        age.Should().Be(expectedAge);
+        age.ShouldBe(expectedAge);
     }
 
     [Fact]
@@ -146,7 +146,7 @@ public sealed class AgeHelperTests
         int ageAfterLeapDay = ageHelper.CalculateAge(dateOnly);
 
         // Assert
-        ageBeforeLeapDay.Should().Be(Constants.Age);
-        ageAfterLeapDay.Should().Be(Constants.AgeLeapDay);
+        ageBeforeLeapDay.ShouldBe(Constants.Age);
+        ageAfterLeapDay.ShouldBe(Constants.AgeLeapDay);
     }
 }

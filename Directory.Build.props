@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
 
         <Nullable>Enable</Nullable>
         <ImplicitUsings>Enable</ImplicitUsings>
@@ -15,6 +15,15 @@
         <WarningsAsErrors>CA2021</WarningsAsErrors>
 
         <ManagePackageVersionsCentrally>True</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
+        <IsPackable>False</IsPackable>
+        <IsTestProject>True</IsTestProject>
     </PropertyGroup>
 
     <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests')) == false">
@@ -42,15 +51,6 @@
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
-        <IsPackable>False</IsPackable>
-        <IsTestProject>True</IsTestProject>
-    </PropertyGroup>
-
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests')) == false">
         <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
 
@@ -65,7 +65,12 @@
     </ItemGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
-        <PackageReference Include="FluentAssertions"/>
+        <PackageReference Include="Shouldly"/>
+        <PackageReference Include="NSubstitute" />
+        <PackageReference Include="NSubstitute.Analyzers.CSharp">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk"/>
         <PackageReference Include="xunit"/>
         <PackageReference Include="xunit.runner.visualstudio">
@@ -79,7 +84,6 @@
         <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing"/>
 
         <Using Include="Xunit"/>
-        <Using Include="FluentAssertions"/>
+        <Using Include="Shouldly"/>
     </ItemGroup>
-
 </Project>

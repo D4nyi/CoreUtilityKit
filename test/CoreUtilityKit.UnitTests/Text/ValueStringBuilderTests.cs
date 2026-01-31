@@ -18,7 +18,7 @@ public sealed class ValueStringBuilderTests
         ValueStringBuilder sb = new(initBuffer);
 
         // Assert
-        sb.Capacity.Should().Be(capacity);
+        sb.Capacity.ShouldBe(capacity);
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public sealed class ValueStringBuilderTests
         ValueStringBuilder sb = new(capacity);
 
         // Assert
-        sb.Capacity.Should().BeGreaterThanOrEqualTo(capacity);
+        sb.Capacity.ShouldBeGreaterThanOrEqualTo(capacity);
     }
 
     [Fact]
@@ -46,8 +46,8 @@ public sealed class ValueStringBuilderTests
         sb.Length++;
 
         // Assert
-        sb.Length.Should().Be(1);
-        sb.Capacity.Should().Be(capacity);
+        sb.Length.ShouldBe(1);
+        sb.Capacity.ShouldBe(capacity);
     }
 
     [Theory]
@@ -62,9 +62,9 @@ public sealed class ValueStringBuilderTests
         };
 
         // Act && Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithParameterName("value");
+        action
+            .ShouldThrow<ArgumentOutOfRangeException>()
+            .ParamName.ShouldBe("value");
     }
 
     [Fact]
@@ -79,7 +79,7 @@ public sealed class ValueStringBuilderTests
         sb.Append('c');
 
         // Act && Assert
-        sb[1].Should().Be('b');
+        sb[1].ShouldBe('b');
     }
 
     [Fact]
@@ -93,9 +93,9 @@ public sealed class ValueStringBuilderTests
         };
 
         // Act && Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithParameterName("index");
+        action
+            .ShouldThrow<ArgumentOutOfRangeException>()
+            .ParamName.ShouldBe("index");
     }
 
     [Theory]
@@ -113,10 +113,10 @@ public sealed class ValueStringBuilderTests
         sb.EnsureCapacity(capacity);
 
         // Assert
-        sb.Capacity.Should().BeGreaterThanOrEqualTo(capacity);
+        sb.Capacity.ShouldBeGreaterThanOrEqualTo(capacity);
         if (sizeShouldChange)
         {
-            sb.Capacity.Should().BeGreaterThan(beforeEnsureCapacity);
+            sb.Capacity.ShouldBeGreaterThan(beforeEnsureCapacity);
         }
     }
 
@@ -131,9 +131,9 @@ public sealed class ValueStringBuilderTests
         };
 
         // Act && Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithParameterName("capacity");
+        action
+            .ShouldThrow<ArgumentOutOfRangeException>()
+            .ParamName.ShouldBe("capacity");
     }
 
     [Fact]
@@ -145,7 +145,7 @@ public sealed class ValueStringBuilderTests
 
         // Act && Assert
         char ch = sb.GetPinnableReference();
-        ch.Should().Be('a');
+        ch.ShouldBe('a');
     }
 
     [Fact]
@@ -161,7 +161,7 @@ public sealed class ValueStringBuilderTests
         _ = sb.GetPinnableReference(true);
 
         // Assert
-        sb.Capacity.Should().BeGreaterThan(beforeAct);
+        sb.Capacity.ShouldBeGreaterThan(beforeAct);
     }
 
     [Fact]
@@ -176,7 +176,7 @@ public sealed class ValueStringBuilderTests
         sb.Append('c');
 
         // Act && Assert
-        sb.ToString().Should().Be("abc");
+        sb.ToString().ShouldBe("abc");
     }
 
     [Fact]
@@ -191,8 +191,8 @@ public sealed class ValueStringBuilderTests
         Span<char> raw = sb.RawChars;
 
         // Assert
-        raw.Length.Should().Be(sb.Length);
-        raw[0].Should().Be(sb[0]);
+        raw.Length.ShouldBe(sb.Length);
+        raw[0].ShouldBe(sb[0]);
     }
 
     [Fact]
@@ -216,10 +216,10 @@ public sealed class ValueStringBuilderTests
         sb.Length++;
 
         // Assert
-        span1.Length.Should().Be(sb.Length - 1);
-        span2.Length.Should().Be(sb.Length - 2);
-        span3.Length.Should().Be(2);
-        span4.Length.Should().Be(sb.Length - 1);
+        span1.Length.ShouldBe(sb.Length - 1);
+        span2.Length.ShouldBe(sb.Length - 2);
+        span3.Length.ShouldBe(2);
+        span4.Length.ShouldBe(sb.Length - 1);
     }
 
     [Fact]
@@ -240,8 +240,8 @@ public sealed class ValueStringBuilderTests
         bool success = sb.TryCopyTo(dest, out int charsWritten);
 
         // Assert
-        success.Should().BeTrue();
-        charsWritten.Should().Be(capacity);
+        success.ShouldBeTrue();
+        charsWritten.ShouldBe(capacity);
     }
 
     [Fact]
@@ -262,8 +262,8 @@ public sealed class ValueStringBuilderTests
         bool success = sb.TryCopyTo(dest, out int charsWritten);
 
         // Assert
-        success.Should().BeFalse();
-        charsWritten.Should().Be(0);
+        success.ShouldBeFalse();
+        charsWritten.ShouldBe(0);
     }
 
     [Fact]
@@ -281,8 +281,8 @@ public sealed class ValueStringBuilderTests
         sb.Insert(0, 'a', 1);
 
         // Assert
-        sb.Length.Should().BeGreaterThan(capacity);
-        sb[0].Should().Be('a');
+        sb.Length.ShouldBeGreaterThan(capacity);
+        sb[0].ShouldBe('a');
     }
 
     [Theory]
@@ -303,13 +303,13 @@ public sealed class ValueStringBuilderTests
         // Assert
         if (s is null)
         {
-            sb.Capacity.Should().Be(capacity);
+            sb.Capacity.ShouldBe(capacity);
         }
         else
         {
-            sb.Length.Should().Be(3);
-            sb[0].Should().Be('a');
-            sb[1].Should().Be('b');
+            sb.Length.ShouldBe(3);
+            sb[0].ShouldBe('a');
+            sb[1].ShouldBe('b');
         }
     }
 
@@ -328,8 +328,8 @@ public sealed class ValueStringBuilderTests
         sb.Append('c');
 
         // Assert
-        sb.Length.Should().BeGreaterThan(capacity);
-        sb[^1].Should().Be('c');
+        sb.Length.ShouldBeGreaterThan(capacity);
+        sb[^1].ShouldBe('c');
     }
 
     [Fact]
@@ -347,10 +347,10 @@ public sealed class ValueStringBuilderTests
         sb.Append('c', 3);
 
         // Assert
-        sb.Length.Should().BeGreaterThan(capacity);
-        sb[^3].Should().Be('c');
-        sb[^2].Should().Be('c');
-        sb[^1].Should().Be('c');
+        sb.Length.ShouldBeGreaterThan(capacity);
+        sb[^3].ShouldBe('c');
+        sb[^2].ShouldBe('c');
+        sb[^1].ShouldBe('c');
     }
 
     [Theory]
@@ -372,18 +372,18 @@ public sealed class ValueStringBuilderTests
         // Assert
         if (s is null)
         {
-            sb.Capacity.Should().Be(capacity);
+            sb.Capacity.ShouldBe(capacity);
         }
         else if (s.Length == 1)
         {
-            sb.Length.Should().Be(capacity);
-            sb[^1].Should().Be('b');
+            sb.Length.ShouldBe(capacity);
+            sb[^1].ShouldBe('b');
         }
         else
         {
-            sb.Length.Should().BeGreaterThan(capacity);
-            sb[^2].Should().Be('b');
-            sb[^1].Should().Be('c');
+            sb.Length.ShouldBeGreaterThan(capacity);
+            sb[^2].ShouldBe('b');
+            sb[^1].ShouldBe('c');
         }
     }
 
@@ -404,8 +404,8 @@ public sealed class ValueStringBuilderTests
         sb.Append(s);
 
         // Assert
-        sb.Length.Should().BeGreaterThan(capacity);
-        sb[^1].Should().Be('d');
+        sb.Length.ShouldBeGreaterThan(capacity);
+        sb[^1].ShouldBe('d');
     }
 
     [Fact]
@@ -423,8 +423,8 @@ public sealed class ValueStringBuilderTests
         Span<char> span = sb.AppendSpan(capacity);
 
         // Assert
-        span.Length.Should().Be(capacity);
-        sb.Length.Should().BeGreaterThanOrEqualTo(capacity * 2);
+        span.Length.ShouldBe(capacity);
+        sb.Length.ShouldBeGreaterThanOrEqualTo(capacity * 2);
     }
 
     [Fact]
@@ -443,7 +443,7 @@ public sealed class ValueStringBuilderTests
         sb.AppendSpanFormattable(10, "d", CultureInfo.InvariantCulture);
 
         // Assert
-        sb.ToString().Should().Be("101010101010");
+        sb.ToString().ShouldBe("101010101010");
     }
 
     [Fact]
@@ -468,7 +468,7 @@ public sealed class ValueStringBuilderTests
         sb.Append(new Rune(65536));
 
         // Assert
-        sb.ToString().Should().Be("é\ud800\udc00            á\ud800\udc00");
+        sb.ToString().ShouldBe("é\ud800\udc00            á\ud800\udc00");
     }
 
     [Theory]
@@ -490,7 +490,7 @@ public sealed class ValueStringBuilderTests
 
         // Assert
         string s = sb.ToString();
-        s.Should().Be(expected);
+        s.ShouldBe(expected);
     }
 
     [Theory]
@@ -507,8 +507,8 @@ public sealed class ValueStringBuilderTests
         };
 
         // Act && Assert
-        action.Should()
-            .Throw<ArgumentOutOfRangeException>()
-            .WithParameterName(paramName);
+        action
+            .ShouldThrow<ArgumentOutOfRangeException>()
+            .ParamName.ShouldBe(paramName);
     }
 }

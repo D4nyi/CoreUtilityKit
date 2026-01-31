@@ -18,14 +18,14 @@ public sealed class ServiceExtensionsTests
         services.AddEnumDescriptionCache(AttributeValue);
 
         // Assert
-        services.Count.Should().Be(1);
+        services.Count.ShouldBe(1);
 
         ServiceDescriptor? descriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IEnumAttributeCache));
 
-        descriptor.Should().NotBeNull();
-        descriptor!.ImplementationInstance.Should().BeOfType<EnumAttributeCache>();
-        descriptor.ImplementationType.Should().BeNull();
-        descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
+        descriptor.ShouldNotBeNull();
+        descriptor!.ImplementationInstance.ShouldBeOfType<EnumAttributeCache>();
+        descriptor.ImplementationType.ShouldBeNull();
+        descriptor.Lifetime.ShouldBe(ServiceLifetime.Singleton);
     }
 
     [Fact]
@@ -39,14 +39,14 @@ public sealed class ServiceExtensionsTests
         services.AddEnumDescriptionCache(AttributeValue, enums);
 
         // Assert
-        services.Count.Should().Be(1);
+        services.Count.ShouldBe(1);
 
         ServiceDescriptor? descriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IEnumAttributeCache));
 
-        descriptor.Should().NotBeNull();
-        descriptor!.ImplementationInstance.Should().NotBeNull();
-        descriptor.ImplementationInstance.Should().BeOfType<EnumAttributeCache>();
-        descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
+        descriptor.ShouldNotBeNull();
+        descriptor!.ImplementationInstance.ShouldNotBeNull();
+        descriptor.ImplementationInstance.ShouldBeOfType<EnumAttributeCache>();
+        descriptor.Lifetime.ShouldBe(ServiceLifetime.Singleton);
     }
 
     [Fact]
@@ -60,13 +60,13 @@ public sealed class ServiceExtensionsTests
         services.AddReadonlyEnumAttributionCache(AttributeValue, enums);
 
         // Assert
-        services.Count.Should().Be(1);
+        services.Count.ShouldBe(1);
 
         ServiceDescriptor? descriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IReadonlyEnumAttributeCache));
 
-        descriptor.Should().NotBeNull();
-        descriptor!.ImplementationInstance.Should().NotBeNull();
-        descriptor.ImplementationInstance.Should().BeOfType<ReadonlyEnumAttributeCache>();
-        descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
+        descriptor.ShouldNotBeNull();
+        descriptor!.ImplementationInstance.ShouldNotBeNull();
+        descriptor.ImplementationInstance.ShouldBeOfType<ReadonlyEnumAttributeCache>();
+        descriptor.Lifetime.ShouldBe(ServiceLifetime.Singleton);
     }
 }

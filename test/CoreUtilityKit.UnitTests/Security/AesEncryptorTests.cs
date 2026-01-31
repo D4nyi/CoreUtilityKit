@@ -21,7 +21,7 @@ public sealed class AesEncryptorTests
         string hash = AesEncryptor.Encrypt(StringToHash, Password);
 
         // Assert
-        _ = hash.Should().NotBeNullOrWhiteSpace();
+        hash.ShouldNotBeNullOrWhiteSpace();
     }
 
     [Fact]
@@ -36,12 +36,13 @@ public sealed class AesEncryptorTests
         for (int i = 0; i < expectedCount; i++)
         {
             string hash = AesEncryptor.Encrypt(StringToHash, Password);
+
             // Assert
-            _ = hashes.Add(hash).Should().BeTrue();
+            hashes.Add(hash).ShouldBeTrue();
         }
 
         // Assert
-        hashes.Should().HaveCount(expectedCount);
+        hashes.Count.ShouldBe(expectedCount);
     }
 
     [Theory]
@@ -50,10 +51,10 @@ public sealed class AesEncryptorTests
     public void Encrypt_ShouldReturnEmptyString_WhenInputIsNullOrEmpty(string? data)
     {
         // Act
-        Action action = () => AesEncryptor.Encrypt(data, Password).Should().BeEmpty();
+        Action action = () => AesEncryptor.Encrypt(data, Password).ShouldBeEmpty();
 
         // Assert
-        _ = action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -63,7 +64,7 @@ public sealed class AesEncryptorTests
         Action action = () => AesEncryptor.Encrypt(StringToHash, null);
 
         // Assert
-        _ = action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
     #endregion
 
@@ -75,7 +76,7 @@ public sealed class AesEncryptorTests
         string hash = AesEncryptor.EncryptAsJson(_objectToHash, Password);
 
         // Assert
-        _ = hash.Should().NotBeNullOrWhiteSpace();
+        hash.ShouldNotBeNullOrWhiteSpace();
     }
 
     [Fact]
@@ -90,21 +91,21 @@ public sealed class AesEncryptorTests
         for (int i = 0; i < 10; i++)
         {
             string hash = AesEncryptor.EncryptAsJson(_objectToHash, Password);
-            _ = hashes.Add(hash).Should().BeTrue();
+            hashes.Add(hash).ShouldBeTrue();
         }
 
         // Assert
-        hashes.Should().HaveCount(expectedCount);
+        hashes.Count.ShouldBe(expectedCount);
     }
 
     [Fact]
     public void EncryptAsJson_ShouldReturnEmptyString_WhenInputIsNull()
     {
         // Act
-        Action action = () => AesEncryptor.EncryptAsJson<TestData>(null, Password).Should().BeEmpty();
+        Action action = () => AesEncryptor.EncryptAsJson<TestData>(null, Password).ShouldBeEmpty();
 
         // Assert
-        _ = action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -114,7 +115,7 @@ public sealed class AesEncryptorTests
         Action action = () => AesEncryptor.EncryptAsJson(StringToHash, null);
 
         // Assert
-        _ = action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
     #endregion
 
@@ -129,7 +130,7 @@ public sealed class AesEncryptorTests
         string stringThatWasHashed = AesEncryptor.Decrypt(hash, Password);
 
         // Assert
-        _ = stringThatWasHashed.Should().Be(StringToHash);
+        stringThatWasHashed.ShouldBe(StringToHash);
     }
 
     [Theory]
@@ -138,10 +139,10 @@ public sealed class AesEncryptorTests
     public void Decrypt_ShouldReturnEmptyString_WhenInputIsNullOrEmpty(string? hash)
     {
         // Act
-        Action action = () => AesEncryptor.Decrypt(hash, Password).Should().BeEmpty();
+        Action action = () => AesEncryptor.Decrypt(hash, Password).ShouldBeEmpty();
 
         // Assert
-        _ = action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -151,7 +152,7 @@ public sealed class AesEncryptorTests
         Action action = () => AesEncryptor.Decrypt(StringToHash, null);
 
         // Assert
-        _ = action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
     #endregion
 
@@ -166,7 +167,7 @@ public sealed class AesEncryptorTests
         TestData? obj = AesEncryptor.DecryptFromJson<TestData>(hash, Password);
 
         // Assert
-        _ = obj.Should().NotBeNull().And.BeEquivalentTo(_objectToHash);
+        obj.ShouldNotBeNull().ShouldBeEquivalentTo(_objectToHash);
     }
 
     [Theory]
@@ -176,10 +177,10 @@ public sealed class AesEncryptorTests
     {
         // Act
         Action action = () =>
-             AesEncryptor.DecryptFromJson<TestData>(hash, Password).Should().BeNull();
+             AesEncryptor.DecryptFromJson<TestData>(hash, Password).ShouldBeNull();
 
         // Assert
-        _ = action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 
     [Fact]
@@ -193,7 +194,7 @@ public sealed class AesEncryptorTests
              AesEncryptor.DecryptFromJson<TestData>(hash, null);
 
         // Assert
-        _ = action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
     #endregion
 }

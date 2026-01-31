@@ -13,19 +13,21 @@ internal sealed class ReadonlyEnumAttributeCache : IReadonlyEnumAttributeCache
     internal ReadonlyEnumAttributeCache(Dictionary<Enum, string> dict)
     {
         ArgumentNullException.ThrowIfNull(dict);
+
         if (dict.Count == 0)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(dict),
                 dict.Count,
-                "Readonly cache must not be empty!");
+                "Readonly cache must not be empty!"
+            );
         }
 
         _dict = dict
             .ToFrozenDictionary(
             static kvp => kvp.Key,
             static kvp => kvp.Value
-            );
+        );
     }
 
     public bool ContainsKey(Enum key) => _dict.ContainsKey(key);

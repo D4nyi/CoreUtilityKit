@@ -15,7 +15,7 @@ public sealed class LoopExtensionsTests
         }
 
         // Assert
-        sum.Should().Be(expectedSum);
+        sum.ShouldBe(expectedSum);
     }
 
     [Theory]
@@ -31,7 +31,7 @@ public sealed class LoopExtensionsTests
         }
 
         // Assert
-        sum.Should().Be(expectedSum);
+        sum.ShouldBe(expectedSum);
     }
 
     [Theory]
@@ -47,27 +47,25 @@ public sealed class LoopExtensionsTests
         }
 
         // Assert
-        sum.Should().Be(expectedSum);
+        sum.ShouldBe(expectedSum);
     }
 
     [Fact]
     public void LoopExtension_ShouldThrow_WhenInfiniteLoopDetected()
     {
         // Act
-        Func<int> action = () =>
+        Action action = () =>
         {
             int sum = 0;
             foreach (int i in 0..)
             {
                 sum += i;
             }
-
-            return sum;
         };
 
         // Assert
-        _ = action.Should()
-            .Throw<NotSupportedException>()
-            .WithMessage("Infinite loops are not allowed!");
+        action
+            .ShouldThrow<NotSupportedException>()
+            .Message.ShouldBe("Infinite loops are not allowed!");
     }
 }

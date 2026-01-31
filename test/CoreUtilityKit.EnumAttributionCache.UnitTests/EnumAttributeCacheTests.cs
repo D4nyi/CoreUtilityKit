@@ -18,7 +18,7 @@ public sealed class EnumAttributeCacheTests
     public void Ctor_ShouldBeEmpty_WhenDefaultIsCalled()
     {
         // Act && Assert
-        _cache.Count.Should().Be(0);
+        _cache.Count.ShouldBe(0);
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public sealed class EnumAttributeCacheTests
         _cache = new EnumAttributeCache(dict, _singleReader);
 
         // Assert
-        _cache.Count.Should().Be(4);
+        _cache.Count.ShouldBe(4);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public sealed class EnumAttributeCacheTests
         bool contains = _cache.ContainsKey(Color.Red);
 
         // Assert
-        contains.Should().BeTrue();
+        contains.ShouldBeTrue();
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public sealed class EnumAttributeCacheTests
         bool contains = _cache.ContainsKey(Color.Red);
 
         // Assert
-        contains.Should().BeFalse();
+        contains.ShouldBeFalse();
     }
 
     [Fact]
@@ -67,8 +67,8 @@ public sealed class EnumAttributeCacheTests
         bool contains = _cache.TryGetValue(Color.Red, out string? description);
 
         // Assert
-        contains.Should().BeTrue();
-        description.Should().NotBeNull();
+        contains.ShouldBeTrue();
+        description.ShouldNotBeNull();
     }
 
     [Fact]
@@ -81,8 +81,8 @@ public sealed class EnumAttributeCacheTests
         bool contains = _cache.TryGetValue(Color.None, out string? description);
 
         // Assert
-        contains.Should().BeTrue();
-        description.Should().BeNull();
+        contains.ShouldBeTrue();
+        description.ShouldBeNull();
     }
 
     [Fact]
@@ -92,8 +92,8 @@ public sealed class EnumAttributeCacheTests
         bool contains = _cache.TryGetValue(Color.Red, out string? description);
 
         // Assert
-        contains.Should().BeFalse();
-        description.Should().BeNull();
+        contains.ShouldBeFalse();
+        description.ShouldBeNull();
     }
 
     [Fact]
@@ -103,8 +103,8 @@ public sealed class EnumAttributeCacheTests
         bool added = _cache.TryAdd(Color.Red);
 
         // Assert
-        added.Should().BeTrue();
-        _cache.ContainsKey(Color.Red).Should().BeTrue();
+        added.ShouldBeTrue();
+        _cache.ContainsKey(Color.Red).ShouldBeTrue();
     }
 
     [Fact]
@@ -114,8 +114,8 @@ public sealed class EnumAttributeCacheTests
         bool added = _cache.TryAdd(Color.Black);
 
         // Assert
-        added.Should().BeTrue();
-        _cache.ContainsKey(Color.Black).Should().BeTrue();
+        added.ShouldBeTrue();
+        _cache.ContainsKey(Color.Black).ShouldBeTrue();
     }
 
     [Fact]
@@ -126,9 +126,9 @@ public sealed class EnumAttributeCacheTests
         bool added2 = _cache.TryAdd(Color.Red);
 
         // Assert
-        added1.Should().BeTrue();
-        added2.Should().BeFalse();
-        _cache.ContainsKey(Color.Red).Should().BeTrue();
+        added1.ShouldBeTrue();
+        added2.ShouldBeFalse();
+        _cache.ContainsKey(Color.Red).ShouldBeTrue();
     }
 
     [Fact]
@@ -140,8 +140,8 @@ public sealed class EnumAttributeCacheTests
         string? description3 = _cache.GetOrAdd(Color.None);
 
         // Assert
-        description1.Should().NotBeNull();
-        description2.Should().NotBeNull();
-        description3.Should().BeNull();
+        description1.ShouldNotBeNull();
+        description2.ShouldNotBeNull();
+        description3.ShouldBeNull();
     }
 }

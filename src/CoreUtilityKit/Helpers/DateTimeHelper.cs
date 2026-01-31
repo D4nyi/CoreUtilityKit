@@ -362,7 +362,7 @@ public static class DateTimeHelper
 
         ulong uTicks = ticks & TicksMask;
 
-        // r1 = (day number within 100-year period) * 4
+        // r1 = (day number within a 100-year period) * 4
         uint r1 = (((uint)(uTicks / TicksPer6Hours) | 3U) + 1224) % DaysPer400Years;
         uint u2 = EafMultiplier * (r1 | 3u);
         ushort daySinceMarch1 = (ushort)(u2 / EafDivider);

@@ -18,7 +18,7 @@ public sealed class TaskExtensionsTest
         int[] results = await TaskHelpers.WhenAll(tasks);
 
         // Assert
-        results.Should().BeEquivalentTo(_expected3Element);
+        results.ShouldBeEquivalentTo(_expected3Element);
     }
 
     [Fact]
@@ -36,9 +36,10 @@ public sealed class TaskExtensionsTest
         Func<Task> action = () => TaskHelpers.WhenAll(tasks);
 
         // Assert
-        await action.Should()
-            .ThrowAsync<InvalidOperationException>()
-            .WithMessage("ERROR!");
+        var ex = await action.ShouldThrowAsync<AggregateException>();
+        ex.InnerExceptions
+            .ShouldHaveSingleItem()
+            .Message.ShouldBe("ERROR!");
     }
 
     [Fact]
@@ -57,7 +58,7 @@ public sealed class TaskExtensionsTest
         Func<Task> action = () => TaskHelpers.WhenAll(tasks);
 
         // Assert
-        await action.Should().ThrowAsync<System.Diagnostics.UnreachableException>();
+        await action.ShouldThrowAsync<System.Diagnostics.UnreachableException>();
 
         // Cleanup
         cts.Dispose();
@@ -79,7 +80,7 @@ public sealed class TaskExtensionsTest
         int[] results = await tasks;
 
         // Assert
-        results.Should().BeEquivalentTo(_expected2Element);
+        results.ShouldBeEquivalentTo(_expected2Element);
     }
 
     [Fact]
@@ -92,7 +93,7 @@ public sealed class TaskExtensionsTest
         int[] results = await tasks;
 
         // Assert
-        results.Should().BeEquivalentTo(_expected3Element);
+        results.ShouldBeEquivalentTo(_expected3Element);
     }
 
     [Fact]
@@ -105,6 +106,6 @@ public sealed class TaskExtensionsTest
         int[] results = await tasks;
 
         // Assert
-        results.Should().BeEquivalentTo(_expected4Element);
+        results.ShouldBeEquivalentTo(_expected4Element);
     }
 }

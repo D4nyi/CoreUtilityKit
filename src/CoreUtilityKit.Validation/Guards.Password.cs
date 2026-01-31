@@ -28,7 +28,9 @@ public static partial class Guards
                 ValidateStringConstraints(password) &&
                 PasswordRegex().IsMatch(password);
         }
-        catch // hard to test
+#pragma warning disable CA1031 // Do not catch general exception types
+        catch
+#pragma warning restore CA1031
         {
             return false;
         }

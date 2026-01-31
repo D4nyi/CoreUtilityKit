@@ -31,7 +31,9 @@ public static partial class Guards
 
             return EmailRegex().IsMatch(result);
         }
-        catch // hard to test
+#pragma warning disable CA1031 // Do not catch general exception types
+        catch
+#pragma warning restore CA1031
         {
             return false;
         }
@@ -55,7 +57,7 @@ public static partial class Guards
         // must contain an '@' symbol and has at least one char before it
         if (atPos < 1)
         {
-            atPos = default;
+            atPos = 0;
             return false;
         }
 
@@ -63,7 +65,7 @@ public static partial class Guards
         int lastDot = emailSpan.LastIndexOf('.');
         if (lastDot <= 1) // no one has a tld domain email address, or a domain with no tld
         {
-            atPos = default;
+            atPos = 0;
             return false;
         }
 
@@ -76,7 +78,7 @@ public static partial class Guards
         int emailByteCount = Encoding.UTF8.GetByteCount(emailSpan);
         if (emailByteCount > 320)
         {
-            atPos = default;
+            atPos = 0;
             return false;
         }
 
@@ -88,7 +90,7 @@ public static partial class Guards
         if (localPartByteCount > 64 ||     // < 1 case tested above by searching for '@'
             domainPartByteCount > 255 + 1) // + 1 for the @ symbol; it is not included in the domain part by the RFC
         {
-            atPos = default;
+            atPos = 0;
             return false;
         }
 

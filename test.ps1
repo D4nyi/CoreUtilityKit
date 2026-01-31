@@ -20,7 +20,7 @@ function private:RemoveDir([string] $DirPath) {
 
 
 function private:ExecuteTests() {
-    $TestCommand = "dotnet test --collect:`"XPlat Code Coverage`" --settings coverlet.runsettings.xml";
+    $TestCommand = "dotnet test .\CoreUtilityKit.sln --collect:`"XPlat Code Coverage`" --settings coverlet.runsettings.xml";
 
     InvokeCommand("dotnet clean");
 
@@ -30,7 +30,7 @@ function private:ExecuteTests() {
 
 function private:GenerateReport([string] $CoverageReportPath) {
     $GenerateReportCommand = "reportgenerator -reports:.\test\coverageresults\*\coverage.cobertura.xml -targetdir:$CoverageReportPath -reporttypes:Html_Dark";
-    
+
     InvokeCommand($GenerateReportCommand);
 
     InvokeCommand("start $CoverageReportPath\index.html");
@@ -52,4 +52,4 @@ RemoveDir($TestResultsPath);
 
 ExecuteTests;
 
-GenerateReport($CoverageReportPath);
+GenerateReport $CoverageReportPath;

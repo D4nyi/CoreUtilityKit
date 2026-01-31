@@ -7,5 +7,5 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\CoreUtilityKit.EnumAttributeCache\CoreUtilityKit.EnumAttributionCache.csproj" />
     </ItemGroup>
-    
+
 </Project>

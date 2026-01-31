@@ -14,7 +14,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = list.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeTrue();
+        isNullOrEmpty.ShouldBeTrue();
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = list.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeTrue();
+        isNullOrEmpty.ShouldBeTrue();
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = list.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeFalse();
+        isNullOrEmpty.ShouldBeFalse();
     }
     #endregion
 
@@ -58,7 +58,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = dict.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeTrue();
+        isNullOrEmpty.ShouldBeTrue();
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = dict.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeTrue();
+        isNullOrEmpty.ShouldBeTrue();
     }
 
     [Fact]
@@ -87,7 +87,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = dict.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeFalse();
+        isNullOrEmpty.ShouldBeFalse();
     }
     #endregion
 
@@ -102,7 +102,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = enumerable.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeTrue();
+        isNullOrEmpty.ShouldBeTrue();
     }
 
     [Fact]
@@ -115,7 +115,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = enumerable.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeTrue();
+        isNullOrEmpty.ShouldBeTrue();
     }
 
     [Fact]
@@ -128,7 +128,7 @@ public sealed class ListExtensionTest
         bool isNullOrEmpty = enumerable.IsNullOrEmpty();
 
         // Assert
-        isNullOrEmpty.Should().BeFalse();
+        isNullOrEmpty.ShouldBeFalse();
     }
     #endregion
     #endregion
@@ -145,7 +145,7 @@ public sealed class ListExtensionTest
         List<int> emptyIfNull = list.ToEmptyIfNull();
 
         // Assert
-        emptyIfNull.Should().NotBeNull().And.HaveCount(0);
+        emptyIfNull.ShouldNotBeNull().ShouldBeEmpty();
     }
 
     [Fact]
@@ -158,7 +158,7 @@ public sealed class ListExtensionTest
         List<int> emptyIfNull = list.ToEmptyIfNull();
 
         // Assert
-        emptyIfNull.Should().BeSameAs(list);
+        emptyIfNull.ShouldBeSameAs(list);
     }
     #endregion
 
@@ -173,7 +173,7 @@ public sealed class ListExtensionTest
         Dictionary<int, int> emptyIfNull = dict.ToEmptyIfNull();
 
         // Assert
-        emptyIfNull.Should().NotBeNull().And.HaveCount(0);
+        emptyIfNull.ShouldNotBeNull().ShouldBeEmpty();
     }
 
     [Fact]
@@ -186,7 +186,7 @@ public sealed class ListExtensionTest
         Dictionary<int, int> emptyIfNull = dict.ToEmptyIfNull();
 
         // Assert
-        emptyIfNull.Should().BeSameAs(dict);
+        emptyIfNull.ShouldBeSameAs(dict);
     }
     #endregion
 
@@ -201,7 +201,7 @@ public sealed class ListExtensionTest
         IEnumerable<int> emptyIfNull = enumerable.ToEmptyIfNull();
 
         // Assert
-        emptyIfNull.Should().NotBeNull().And.HaveCount(0);
+        emptyIfNull.ShouldNotBeNull().ShouldBeEmpty();
     }
 
     [Fact]
@@ -214,7 +214,7 @@ public sealed class ListExtensionTest
         IEnumerable<int> emptyIfNull = enumerable.ToEmptyIfNull();
 
         // Assert
-        emptyIfNull.Should().BeSameAs(enumerable);
+        emptyIfNull.ShouldBeSameAs(enumerable);
     }
     #endregion
     #endregion
@@ -231,9 +231,9 @@ public sealed class ListExtensionTest
         int addedValue = dict.GetOrAdd(1, 2);
 
         // Assert
-        addedValue.Should().Be(2);
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(1);
+        addedValue.ShouldBe(2);
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(1);
     }
 
     [Fact]
@@ -249,9 +249,9 @@ public sealed class ListExtensionTest
         int addedValue = dict.GetOrAdd(2, 4);
 
         // Assert
-        addedValue.Should().Be(3);
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(2);
+        addedValue.ShouldBe(3);
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(2);
     }
 
     [Fact]
@@ -264,9 +264,9 @@ public sealed class ListExtensionTest
         int addedValue = dict.GetOrAdd(1, static a => a + 2);
 
         // Assert
-        addedValue.Should().Be(3);
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(1);
+        addedValue.ShouldBe(3);
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(1);
     }
 
     [Fact]
@@ -282,9 +282,9 @@ public sealed class ListExtensionTest
         int addedValue = dict.GetOrAdd(2, static a => a + 2);
 
         // Assert
-        addedValue.Should().Be(3);
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(2);
+        addedValue.ShouldBe(3);
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(2);
     }
 
     [Fact]
@@ -297,9 +297,9 @@ public sealed class ListExtensionTest
         int addedValue = dict.GetOrAdd(1, static (a, b) => a + b + 2, 10);
 
         // Assert
-        addedValue.Should().Be(13);
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(1);
+        addedValue.ShouldBe(13);
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(1);
     }
 
     [Fact]
@@ -315,14 +315,14 @@ public sealed class ListExtensionTest
         int addedValue = dict.GetOrAdd(2, static (a, b) => a + b + 2, 10);
 
         // Assert
-        addedValue.Should().Be(3);
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(2);
+        addedValue.ShouldBe(3);
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(2);
     }
 
     #endregion
 
-    #region GetOrAdd
+    #region TryUpdate
 
     [Fact]
     public void TryUpdate_Updates_IfExists()
@@ -337,10 +337,10 @@ public sealed class ListExtensionTest
         bool success = dict.TryUpdate(2, 4);
 
         // Assert
-        success.Should().BeTrue();
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(2);
-        dict.Values.First().Should().Be(4);
+        success.ShouldBeTrue();
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(2);
+        dict.Values.First().ShouldBe(4);
     }
 
     [Fact]
@@ -356,8 +356,8 @@ public sealed class ListExtensionTest
         bool success = dict.TryUpdate(0, 4);
 
         // Assert
-        success.Should().BeFalse();
-        dict.Should().HaveCount(1);
+        success.ShouldBeFalse();
+        dict.ShouldHaveSingleItem();
     }
 
     [Fact]
@@ -373,10 +373,10 @@ public sealed class ListExtensionTest
         bool success = dict.TryUpdate(2, static a => a + 2);
 
         // Assert
-        success.Should().BeTrue();
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(2);
-        dict.Values.First().Should().Be(4);
+        success.ShouldBeTrue();
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(2);
+        dict.Values.First().ShouldBe(4);
     }
 
     [Fact]
@@ -392,8 +392,8 @@ public sealed class ListExtensionTest
         bool success = dict.TryUpdate(0, static a => a + 2);
 
         // Assert
-        success.Should().BeFalse();
-        dict.Should().HaveCount(1);
+        success.ShouldBeFalse();
+        dict.ShouldHaveSingleItem();
     }
 
     [Fact]
@@ -409,10 +409,10 @@ public sealed class ListExtensionTest
         bool success = dict.TryUpdate(2, static (a, b) => a + b + 2, 10);
 
         // Assert
-        success.Should().BeTrue();
-        dict.Should().HaveCount(1);
-        dict.Keys.First().Should().Be(2);
-        dict.Values.First().Should().Be(14);
+        success.ShouldBeTrue();
+        dict.ShouldHaveSingleItem();
+        dict.Keys.First().ShouldBe(2);
+        dict.Values.First().ShouldBe(14);
     }
 
     [Fact]
@@ -428,8 +428,10 @@ public sealed class ListExtensionTest
         bool success = dict.TryUpdate(0, static (a, b) => a + b + 2, 10);
 
         // Assert
-        success.Should().BeFalse();
-        dict.Should().HaveCount(1);
+        success.ShouldBeFalse();
+        dict.ShouldHaveSingleItem();
+    }
+    #endregion
     }
     #endregion
 }

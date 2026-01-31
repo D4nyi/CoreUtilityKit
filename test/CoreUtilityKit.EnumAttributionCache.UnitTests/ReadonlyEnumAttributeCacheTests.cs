@@ -18,7 +18,7 @@ public sealed class ReadonlyEnumAttributeCacheTests
     [Fact]
     public void ShouldHaveCount4()
     {
-        _cache.Count.Should().Be(4);
+        _cache.Count.ShouldBe(4);
     }
 
     [Fact]
@@ -28,7 +28,7 @@ public sealed class ReadonlyEnumAttributeCacheTests
         Action action = () => _ = new ReadonlyEnumAttributeCache(null!);
 
         // Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     [Fact]
@@ -38,9 +38,9 @@ public sealed class ReadonlyEnumAttributeCacheTests
         Action action = () => _ = new ReadonlyEnumAttributeCache([]);
 
         // Assert
-        action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("Readonly cache must not be empty! (Parameter 'dict')\r\nActual value was 0.")
-            .WithParameterName("dict");
+        var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
+        ex.Message.ShouldBe("Readonly cache must not be empty! (Parameter 'dict')\r\nActual value was 0.");
+        ex.ParamName.ShouldBe("dict");
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public sealed class ReadonlyEnumAttributeCacheTests
         bool contains = _cache.ContainsKey(Color.Red);
 
         // Assert
-        contains.Should().BeTrue();
+        contains.ShouldBeTrue();
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public sealed class ReadonlyEnumAttributeCacheTests
         bool contains = _cache.ContainsKey(Color.None);
 
         // Assert
-        contains.Should().BeFalse();
+        contains.ShouldBeFalse();
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public sealed class ReadonlyEnumAttributeCacheTests
         bool contains = _cache.TryGetValue(RegexOptions.None, out string? description);
 
         // Assert
-        contains.Should().BeFalse();
-        description.Should().BeNull();
+        contains.ShouldBeFalse();
+        description.ShouldBeNull();
     }
 }

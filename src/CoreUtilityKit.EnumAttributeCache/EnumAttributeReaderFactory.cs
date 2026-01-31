@@ -51,7 +51,7 @@ internal static class EnumAttributeReaderFactory
     {
         Dictionary<Enum, string> dict = [];
 
-        foreach (FieldInfo fi in enums.SelectMany(([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] x) => x.GetFields(Flags)))
+        foreach (FieldInfo fi in enums.SelectMany(([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields)] x) => x.GetFields(Flags)))
         {
             if (fi.GetCustomAttributes(typeof(T), false) is T[] { Length: > 0 } attributes)
             {
@@ -93,7 +93,7 @@ internal static class EnumAttributeReaderFactory
             DescriptionAttribute description => description.Description,
             EnumMemberAttribute enumMember => enumMember.Value,
             DisplayAttribute displayAttribute => displayName ? displayAttribute.Name : displayAttribute.Description,
-            _ => throw new UnreachableException($"Unknown attribute provided! ({typeof(T).FullName})"),
+            _ => throw new UnreachableException($"Unknown attribute provided! ({typeof(T).FullName})")
         };
     }
 }

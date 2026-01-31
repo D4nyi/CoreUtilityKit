@@ -12,7 +12,7 @@ public sealed class GuardsEmailTests
         bool success = Guards.ValidateEmail(email);
 
         // Assert
-        success.Should().BeTrue();
+        success.ShouldBeTrue();
     }
 
     [Theory]
@@ -23,7 +23,7 @@ public sealed class GuardsEmailTests
         bool success = Guards.ValidateEmail(email);
 
         // Assert
-        success.Should().BeFalse();
+        success.ShouldBeFalse();
     }
 
     [Fact]
@@ -34,6 +34,6 @@ public sealed class GuardsEmailTests
         Func<bool> action = () => Guards.ValidateEmail(email);
 
         // Act, Assert
-        action.Should().NotThrow();
+        action.ShouldNotThrow();
     }
 }

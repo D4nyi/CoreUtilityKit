@@ -20,9 +20,7 @@ public sealed class EnumAttributeReaderFactoryTests
         Func<Dictionary<Enum, string>> action = () => EnumAttributeReaderFactory.GenerateDictionary(value, [typeof(Color)]);
 
         // Act && Assert
-        action
-            .Should().NotThrow()
-            .Subject.Should().NotBeEmpty();
+        action.ShouldNotThrow().ShouldNotBeEmpty();
     }
 
     [Theory]
@@ -34,8 +32,9 @@ public sealed class EnumAttributeReaderFactoryTests
         Func<Dictionary<Enum, string>> action = () => EnumAttributeReaderFactory.GenerateDictionary(value, [typeof(Color)]);
 
         // Act && Assert
-        action.Should().Throw<UnreachableException>()
-            .WithMessage($"Value {value} is not supported!");
+        action
+            .ShouldThrow<UnreachableException>()
+            .Message.ShouldBe($"Value {value} is not supported!");
     }
 
     [Theory]
@@ -46,9 +45,7 @@ public sealed class EnumAttributeReaderFactoryTests
         Func<Func<Enum, string?>> action = () => EnumAttributeReaderFactory.GetSingleReader(value);
 
         // Act && Assert
-        action
-            .Should().NotThrow()
-            .Subject.Should().NotBeNull();
+        action.ShouldNotThrow().ShouldNotBeNull();
     }
 
     [Theory]
@@ -60,8 +57,9 @@ public sealed class EnumAttributeReaderFactoryTests
         Func<Func<Enum, string?>> action = () => EnumAttributeReaderFactory.GetSingleReader(value);
 
         // Act && Assert
-        action.Should().Throw<UnreachableException>()
-            .WithMessage($"Value {value} is not supported!");
+        action
+            .ShouldThrow<UnreachableException>()
+            .Message.ShouldBe($"Value {value} is not supported!");
     }
 
     #endregion
@@ -76,8 +74,25 @@ public sealed class EnumAttributeReaderFactoryTests
         Dictionary<Enum, string> dict = EnumAttributeReaderFactory.GenerateDictionary(attributeValue, [typeof(Color)]);
 
         // Assert
-        dict.Should().HaveCount(4);
-        dict.Should().BeEquivalentTo(ColorNames.Lookup);
+        dict.Count.ShouldBe(4);
+        EquivalentTo(ColorNames.Lookup, dict).ShouldBeTrue();
+
+        return;
+
+        static bool EquivalentTo(IReadOnlyDictionary<Color, string>? first, Dictionary<Enum, string>? second)
+        {
+            if (first is null || second is null) return false;
+            if (first.Count != second.Count) return false;
+
+            foreach ((Color key, string? value) in first)
+            {
+                second.ShouldContainKey(key);
+
+                second[key].ShouldBe(value);
+            }
+
+            return true;
+        }
     }
 
     [Theory]
@@ -90,11 +105,11 @@ public sealed class EnumAttributeReaderFactoryTests
         // Act && Assert
         if (types is null)
         {
-            action.Should().Throw<ArgumentNullException>();
+            action.ShouldThrow<ArgumentNullException>();
         }
         else
         {
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.ShouldThrow<ArgumentOutOfRangeException>();
         }
     }
 
@@ -188,11 +203,11 @@ public sealed class EnumAttributeReaderFactoryTests
         // Assert
         if (color != Color.None)
         {
-            result.Should().Be(ColorNames.Lookup[color]);
+            result.ShouldBe(ColorNames.Lookup[color]);
         }
         else
         {
-            result.Should().BeNull();
+            result.ShouldBeNull();
         }
     }
 
@@ -201,6 +216,6 @@ public sealed class EnumAttributeReaderFactoryTests
         Action action = () => _ = singleReader(null!);
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 }

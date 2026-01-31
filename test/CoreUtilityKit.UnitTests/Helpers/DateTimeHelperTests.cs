@@ -253,13 +253,13 @@ public sealed class DateTimeHelperTests
     {
         const int ExpectedNextYear = 2001;
 
-        DateOnly.FromDateTime(_timeProvider.GetUtcNow().DateTime).NextYear().Should().Be(ExpectedNextYear);
+        DateOnly.FromDateTime(_timeProvider.GetUtcNow().DateTime).NextYear().ShouldBe(ExpectedNextYear);
 
-        _timeProvider.GetUtcNow().DateTime.NextYear().Should().Be(ExpectedNextYear);
+        _timeProvider.GetUtcNow().DateTime.NextYear().ShouldBe(ExpectedNextYear);
 
-        _timeProvider.GetUtcNow().NextYear().Should().Be(ExpectedNextYear);
+        _timeProvider.GetUtcNow().NextYear().ShouldBe(ExpectedNextYear);
 
-        _timeProvider.NextYear().Should().Be(ExpectedNextYear);
+        _timeProvider.NextYear().ShouldBe(ExpectedNextYear);
     }
 
     [Fact]
@@ -271,20 +271,20 @@ public sealed class DateTimeHelperTests
         Action action = () => timeProvider!.NextYear();
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     [Theory]
     [MemberData(nameof(NextMonthData))]
     public void NextMonth_HappyCase(TimeProvider timeProvider, int expectedNextMonth)
     {
-        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).NextMonth().Should().Be(expectedNextMonth);
+        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).NextMonth().ShouldBe(expectedNextMonth);
 
-        timeProvider.GetUtcNow().DateTime.NextMonth().Should().Be(expectedNextMonth);
+        timeProvider.GetUtcNow().DateTime.NextMonth().ShouldBe(expectedNextMonth);
 
-        timeProvider.GetUtcNow().NextMonth().Should().Be(expectedNextMonth);
+        timeProvider.GetUtcNow().NextMonth().ShouldBe(expectedNextMonth);
 
-        timeProvider.NextMonth().Should().Be(expectedNextMonth);
+        timeProvider.NextMonth().ShouldBe(expectedNextMonth);
     }
 
     [Fact]
@@ -296,20 +296,20 @@ public sealed class DateTimeHelperTests
         Action action = () => timeProvider!.NextMonth();
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     [Theory]
     [MemberData(nameof(NextDayData))]
     public void NextDay_HappyCase(TimeProvider timeProvider, int expectedNextDay)
     {
-        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).NextDay().Should().Be(expectedNextDay);
+        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).NextDay().ShouldBe(expectedNextDay);
 
-        timeProvider.GetUtcNow().DateTime.NextDay().Should().Be(expectedNextDay);
+        timeProvider.GetUtcNow().DateTime.NextDay().ShouldBe(expectedNextDay);
 
-        timeProvider.GetUtcNow().NextDay().Should().Be(expectedNextDay);
+        timeProvider.GetUtcNow().NextDay().ShouldBe(expectedNextDay);
 
-        timeProvider.NextDay().Should().Be(expectedNextDay);
+        timeProvider.NextDay().ShouldBe(expectedNextDay);
     }
 
     [Fact]
@@ -321,22 +321,22 @@ public sealed class DateTimeHelperTests
         Action action = () => timeProvider!.NextDay();
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     [Theory]
     [MemberData(nameof(NextDayOfWeekData))]
     public static void NextDayOfWeek_HappyCase(TimeProvider timeProvider, DayOfWeek expectedNextDayOfWeek)
     {
-        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).NextDayOfWeek().Should().Be(expectedNextDayOfWeek);
+        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).NextDayOfWeek().ShouldBe(expectedNextDayOfWeek);
 
-        timeProvider.GetUtcNow().DateTime.NextDayOfWeek().Should().Be(expectedNextDayOfWeek);
+        timeProvider.GetUtcNow().DateTime.NextDayOfWeek().ShouldBe(expectedNextDayOfWeek);
 
-        timeProvider.GetUtcNow().NextDayOfWeek().Should().Be(expectedNextDayOfWeek);
+        timeProvider.GetUtcNow().NextDayOfWeek().ShouldBe(expectedNextDayOfWeek);
 
-        timeProvider.GetUtcNow().DayOfWeek.NextDayOfWeek().Should().Be(expectedNextDayOfWeek);
+        timeProvider.GetUtcNow().DayOfWeek.NextDayOfWeek().ShouldBe(expectedNextDayOfWeek);
 
-        timeProvider.NextDayOfWeek().Should().Be(expectedNextDayOfWeek);
+        timeProvider.NextDayOfWeek().ShouldBe(expectedNextDayOfWeek);
 
     }
 
@@ -349,7 +349,7 @@ public sealed class DateTimeHelperTests
         Action action = () => timeProvider!.NextDayOfWeek();
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     #endregion
@@ -361,13 +361,13 @@ public sealed class DateTimeHelperTests
     {
         const int ExpectedPreviousYear = 1999;
 
-        DateOnly.FromDateTime(_timeProvider.GetUtcNow().DateTime).PreviousYear().Should().Be(ExpectedPreviousYear);
+        DateOnly.FromDateTime(_timeProvider.GetUtcNow().DateTime).PreviousYear().ShouldBe(ExpectedPreviousYear);
 
-        _timeProvider.GetUtcNow().DateTime.PreviousYear().Should().Be(ExpectedPreviousYear);
+        _timeProvider.GetUtcNow().DateTime.PreviousYear().ShouldBe(ExpectedPreviousYear);
 
-        _timeProvider.GetUtcNow().PreviousYear().Should().Be(ExpectedPreviousYear);
+        _timeProvider.GetUtcNow().PreviousYear().ShouldBe(ExpectedPreviousYear);
 
-        _timeProvider.PreviousYear().Should().Be(ExpectedPreviousYear);
+        _timeProvider.PreviousYear().ShouldBe(ExpectedPreviousYear);
     }
 
     [Fact]
@@ -379,20 +379,20 @@ public sealed class DateTimeHelperTests
         Action action = () => timeProvider!.PreviousYear();
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     [Theory]
     [MemberData(nameof(PreviousMonthData))]
     public void PreviousMonth_HappyCase(TimeProvider timeProvider, int expectedPreviousMonth)
     {
-        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).PreviousMonth().Should().Be(expectedPreviousMonth);
+        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).PreviousMonth().ShouldBe(expectedPreviousMonth);
 
-        timeProvider.GetUtcNow().DateTime.PreviousMonth().Should().Be(expectedPreviousMonth);
+        timeProvider.GetUtcNow().DateTime.PreviousMonth().ShouldBe(expectedPreviousMonth);
 
-        timeProvider.GetUtcNow().PreviousMonth().Should().Be(expectedPreviousMonth);
+        timeProvider.GetUtcNow().PreviousMonth().ShouldBe(expectedPreviousMonth);
 
-        timeProvider.PreviousMonth().Should().Be(expectedPreviousMonth);
+        timeProvider.PreviousMonth().ShouldBe(expectedPreviousMonth);
     }
 
     [Fact]
@@ -404,20 +404,20 @@ public sealed class DateTimeHelperTests
         Action action = () => timeProvider!.PreviousMonth();
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     [Theory]
     [MemberData(nameof(PreviousDayData))]
     public void PreviousDay_HappyCase(TimeProvider timeProvider, int expectedPreviousDay)
     {
-        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).PreviousDay().Should().Be(expectedPreviousDay);
+        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).PreviousDay().ShouldBe(expectedPreviousDay);
 
-        timeProvider.GetUtcNow().DateTime.PreviousDay().Should().Be(expectedPreviousDay);
+        timeProvider.GetUtcNow().DateTime.PreviousDay().ShouldBe(expectedPreviousDay);
 
-        timeProvider.GetUtcNow().PreviousDay().Should().Be(expectedPreviousDay);
+        timeProvider.GetUtcNow().PreviousDay().ShouldBe(expectedPreviousDay);
 
-        timeProvider.PreviousDay().Should().Be(expectedPreviousDay);
+        timeProvider.PreviousDay().ShouldBe(expectedPreviousDay);
     }
 
     [Fact]
@@ -429,22 +429,22 @@ public sealed class DateTimeHelperTests
         Action action = () => timeProvider!.PreviousDay();
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     [Theory]
     [MemberData(nameof(PreviousDayOfWeekData))]
     public static void PreviousDayOfWeek_HappyCase(TimeProvider timeProvider, DayOfWeek expectedPreviousDayOfWeek)
     {
-        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).PreviousDayOfWeek().Should().Be(expectedPreviousDayOfWeek);
+        DateOnly.FromDateTime(timeProvider.GetUtcNow().DateTime).PreviousDayOfWeek().ShouldBe(expectedPreviousDayOfWeek);
 
-        timeProvider.GetUtcNow().DateTime.PreviousDayOfWeek().Should().Be(expectedPreviousDayOfWeek);
+        timeProvider.GetUtcNow().DateTime.PreviousDayOfWeek().ShouldBe(expectedPreviousDayOfWeek);
 
-        timeProvider.GetUtcNow().PreviousDayOfWeek().Should().Be(expectedPreviousDayOfWeek);
+        timeProvider.GetUtcNow().PreviousDayOfWeek().ShouldBe(expectedPreviousDayOfWeek);
 
-        timeProvider.GetUtcNow().DayOfWeek.PreviousDayOfWeek().Should().Be(expectedPreviousDayOfWeek);
+        timeProvider.GetUtcNow().DayOfWeek.PreviousDayOfWeek().ShouldBe(expectedPreviousDayOfWeek);
 
-        timeProvider.PreviousDayOfWeek().Should().Be(expectedPreviousDayOfWeek);
+        timeProvider.PreviousDayOfWeek().ShouldBe(expectedPreviousDayOfWeek);
     }
 
     [Fact]
@@ -456,7 +456,7 @@ public sealed class DateTimeHelperTests
         Action action = () => timeProvider!.PreviousDayOfWeek();
 
         // Act && Assert
-        action.Should().Throw<ArgumentNullException>();
+        action.ShouldThrow<ArgumentNullException>();
     }
 
     #endregion
@@ -467,22 +467,22 @@ public sealed class DateTimeHelperTests
     [MemberData(nameof(EndOfMonthData))]
     public void EndOfMonth_HappyCase(TimeProvider timeProvider, TimeProvider expected)
     {
-        timeProvider.GetUtcNow().EndOfMonth().Should().Be(expected.GetUtcNow());
+        timeProvider.GetUtcNow().EndOfMonth().ShouldBe(expected.GetUtcNow());
 
-        timeProvider.GetUtcNow().DateTime.EndOfMonth().Should().Be(expected.GetUtcNow().DateTime);
+        timeProvider.GetUtcNow().DateTime.EndOfMonth().ShouldBe(expected.GetUtcNow().DateTime);
 
-        timeProvider.EndOfMonth().Should().Be(expected.GetUtcNow());
+        timeProvider.EndOfMonth().ShouldBe(expected.GetUtcNow());
     }
 
     [Theory]
     [MemberData(nameof(EndOfMonthAddData))]
     public void EndOfMonth_Add_HappyCase(TimeProvider timeProvider, int addMonth, TimeProvider expected)
     {
-        timeProvider.GetUtcNow().EndOfMonth(addMonth).Should().Be(expected.GetUtcNow());
+        timeProvider.GetUtcNow().EndOfMonth(addMonth).ShouldBe(expected.GetUtcNow());
 
-        timeProvider.GetUtcNow().DateTime.EndOfMonth(addMonth).Should().Be(expected.GetUtcNow().DateTime);
+        timeProvider.GetUtcNow().DateTime.EndOfMonth(addMonth).ShouldBe(expected.GetUtcNow().DateTime);
 
-        timeProvider.EndOfMonth(addMonth).Should().Be(expected.GetUtcNow());
+        timeProvider.EndOfMonth(addMonth).ShouldBe(expected.GetUtcNow());
     }
 
     #endregion
@@ -493,22 +493,22 @@ public sealed class DateTimeHelperTests
     [MemberData(nameof(BeginningOfMonthData))]
     public void BeginningOfMonth_HappyCase(TimeProvider timeProvider, TimeProvider expected)
     {
-        timeProvider.GetUtcNow().BeginningOfMonth().Should().Be(expected.GetUtcNow());
+        timeProvider.GetUtcNow().BeginningOfMonth().ShouldBe(expected.GetUtcNow());
 
-        timeProvider.GetUtcNow().DateTime.BeginningOfMonth().Should().Be(expected.GetUtcNow().DateTime);
+        timeProvider.GetUtcNow().DateTime.BeginningOfMonth().ShouldBe(expected.GetUtcNow().DateTime);
 
-        timeProvider.BeginningOfMonth().Should().Be(expected.GetUtcNow());
+        timeProvider.BeginningOfMonth().ShouldBe(expected.GetUtcNow());
     }
 
     [Theory]
     [MemberData(nameof(BeginningOfMonthAddData))]
     public void BeginningOfMonth_Add_HappyCase(TimeProvider timeProvider, int addMonth, TimeProvider expected)
     {
-        timeProvider.GetUtcNow().BeginningOfMonth(addMonth).Should().Be(expected.GetUtcNow());
+        timeProvider.GetUtcNow().BeginningOfMonth(addMonth).ShouldBe(expected.GetUtcNow());
 
-        timeProvider.GetUtcNow().DateTime.BeginningOfMonth(addMonth).Should().Be(expected.GetUtcNow().DateTime);
+        timeProvider.GetUtcNow().DateTime.BeginningOfMonth(addMonth).ShouldBe(expected.GetUtcNow().DateTime);
 
-        timeProvider.BeginningOfMonth(addMonth).Should().Be(expected.GetUtcNow());
+        timeProvider.BeginningOfMonth(addMonth).ShouldBe(expected.GetUtcNow());
     }
 
     #endregion

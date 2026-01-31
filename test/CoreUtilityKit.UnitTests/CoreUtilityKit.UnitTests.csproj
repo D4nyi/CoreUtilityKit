@@ -12,5 +12,5 @@
         <Using Include="CoreUtilityKit" />
         <Using Include="CoreUtilityKit.Helpers" />
     </ItemGroup>
-    
+
 </Project>
