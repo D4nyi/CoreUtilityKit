@@ -10,6 +10,8 @@ using System.Text.Json.Serialization;
 namespace CoreUtilityKit.Security;
 
 [UnsupportedOSPlatform("browser")]
+[UnsupportedOSPlatform("ios")]
+[UnsupportedOSPlatform("tvos")]
 public static class AesEncryptor
 {
     private const string SerializationUnreferencedCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed. Use the overload that takes a JsonTypeInfo or JsonSerializerContext, or make sure all of the required types are preserved.";
@@ -25,7 +27,7 @@ public static class AesEncryptor
         PropertyNameCaseInsensitive = false,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         ReferenceHandler = ReferenceHandler.IgnoreCycles,
-        NumberHandling = JsonNumberHandling.Strict | JsonNumberHandling.AllowNamedFloatingPointLiterals,
+        NumberHandling = JsonNumberHandling.Strict | JsonNumberHandling.AllowNamedFloatingPointLiterals
     };
 
     private const int SaltSize  = 32;
@@ -201,12 +203,14 @@ public static class AesEncryptor
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static int CalcCipherTextLength(int hashBytesLength) => hashBytesLength - SaltSize - NonceSize - TagSize;
+    private static int CalcCipherTextLength(int hashBytesLength) => hashBytesLength - (SaltSize + NonceSize + TagSize);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static byte[] DeriveKey(string password, byte[] salt)
     {
-        using Rfc2898DeriveBytes rdb = new(password, salt, 100_000, HashAlgorithmName.SHA256);
+        const int iterations = 100_000;
+        const int outputLength = 256 / 8;
 
-        return rdb.GetBytes(256 / 8);
+        return Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, HashAlgorithmName.SHA256, outputLength);
     }
 }
