@@ -17,7 +17,7 @@ public static class EnumAttributeCacheExtensions
     /// <param name="enumTypes">An array of enum types from which the cache will be built.</param>
     /// <returns>A reference to this instance after the operation has completed.</returns>
     /// <seealso cref="ServiceLifetime.Singleton"/>
-    public static IServiceCollection AddReadonlyEnumAttributionCache(this IServiceCollection services, EnumAttributeValue attributeValue, Type[] enumTypes)
+    public static IServiceCollection AddReadonlyEnumAttributeCache(this IServiceCollection services, EnumAttributeValue attributeValue, Type[] enumTypes)
     {
         Dictionary<Enum, string> dict = EnumAttributeReaderFactory.GenerateDictionary(attributeValue, enumTypes);
 
@@ -33,7 +33,7 @@ public static class EnumAttributeCacheExtensions
     /// <param name="attributeValue"><see cref="EnumAttributeValue"/> value describing which attribute type should be read from the enum values.</param>
     /// <returns>A reference to this instance after the operation has completed.</returns>
     /// <seealso cref="ServiceLifetime.Singleton"/>
-    public static IServiceCollection AddEnumDescriptionCache(this IServiceCollection services, EnumAttributeValue attributeValue)
+    public static IServiceCollection AddEnumAttributeCache(this IServiceCollection services, EnumAttributeValue attributeValue)
     {
         Func<Enum, string?> singleReader = EnumAttributeReaderFactory.GetSingleReader(attributeValue);
 
@@ -50,7 +50,7 @@ public static class EnumAttributeCacheExtensions
     /// <param name="enumTypes">An array of enum types from which the cache will be installed.</param>
     /// <returns>A reference to this instance after the operation has completed.</returns>
     /// <seealso cref="ServiceLifetime.Singleton"/>
-    public static IServiceCollection AddEnumDescriptionCache(this IServiceCollection services, EnumAttributeValue attributeValue, Type[] enumTypes)
+    public static IServiceCollection AddEnumAttributeCache(this IServiceCollection services, EnumAttributeValue attributeValue, Type[] enumTypes)
     {
         Dictionary<Enum, string> dict = EnumAttributeReaderFactory.GenerateDictionary(attributeValue, enumTypes);
 

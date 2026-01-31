@@ -15,7 +15,7 @@ public sealed class ServiceExtensionsTests
         ServiceCollection services = new();
 
         // Act
-        services.AddEnumDescriptionCache(AttributeValue);
+        services.AddEnumAttributeCache(AttributeValue);
 
         // Assert
         services.Count.ShouldBe(1);
@@ -36,7 +36,7 @@ public sealed class ServiceExtensionsTests
         Type[] enums = [typeof(Color)];
 
         // Act
-        services.AddEnumDescriptionCache(AttributeValue, enums);
+        services.AddEnumAttributeCache(AttributeValue, enums);
 
         // Assert
         services.Count.ShouldBe(1);
@@ -57,7 +57,7 @@ public sealed class ServiceExtensionsTests
         Type[] enums = [typeof(Color)];
 
         // Act
-        services.AddReadonlyEnumAttributionCache(AttributeValue, enums);
+        services.AddReadonlyEnumAttributeCache(AttributeValue, enums);
 
         // Assert
         services.Count.ShouldBe(1);
