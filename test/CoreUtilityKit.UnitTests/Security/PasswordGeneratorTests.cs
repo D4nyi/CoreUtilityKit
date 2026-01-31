@@ -34,9 +34,11 @@ public sealed class PasswordGeneratorTests
         // Assert
         action.ShouldThrow<ArgumentOutOfRangeException>();
     }
+
     #endregion
 
     #region Deterministic tests
+
     [Theory]
     [InlineData(8, 4)]
     [InlineData(10, 5)]

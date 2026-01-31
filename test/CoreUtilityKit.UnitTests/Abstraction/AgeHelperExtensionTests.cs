@@ -25,7 +25,7 @@ public sealed class AgeHelperExtensionTests
         descriptor = _services.FirstOrDefault(x => x.ServiceType == typeof(IAgeHelper));
 
         descriptor.ShouldNotBeNull();
-        descriptor.ImplementationType.ShouldBeOfType<AgeHelper>();
+        descriptor.ImplementationType.ShouldBe(typeof(AgeHelper));
         descriptor.Lifetime.ShouldBe(ServiceLifetime.Singleton);
     }
 

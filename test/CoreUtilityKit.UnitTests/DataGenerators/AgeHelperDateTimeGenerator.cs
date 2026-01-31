@@ -18,6 +18,7 @@ internal static class Constants
     internal static readonly TimeProvider TimeProvider = new FakeTimeProvider(DateTimeOffsetUtc.AddYears(Age));
 
     private static readonly DateTimeOffset _leapDayTime = DateTimeOffsetUtc.AddYears(AgeLeapDay).AddMonths(1).AddDays(27);
+
     internal static TimeProvider CreateTimeProviderForLeapDay()
     {
         return new FakeTimeProvider(_leapDayTime)

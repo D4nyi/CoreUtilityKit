@@ -13,7 +13,7 @@ public enum EnumAttributeValue
     Description,
     EnumMemberValue,
     DisplayName,
-    DisplayDescription,
+    DisplayDescription
 }
 
 internal static class EnumAttributeReaderFactory
@@ -31,7 +31,7 @@ internal static class EnumAttributeReaderFactory
             EnumAttributeValue.EnumMemberValue => CreateDictionary<EnumMemberAttribute>(enums, static x => x.Value!),
             EnumAttributeValue.DisplayName => CreateDictionary<DisplayAttribute>(enums, static x => x.Name!),
             EnumAttributeValue.DisplayDescription => CreateDictionary<DisplayAttribute>(enums, static x => x.Description!),
-            _ => throw new UnreachableException($"Value {attributeValue} is not supported!"),
+            _ => throw new UnreachableException($"Value {attributeValue} is not supported!")
         };
     }
 
@@ -43,7 +43,7 @@ internal static class EnumAttributeReaderFactory
             EnumAttributeValue.EnumMemberValue => GetEnumMemberValue,
             EnumAttributeValue.DisplayName => GetDisplayName,
             EnumAttributeValue.DisplayDescription => GetDisplayDescription,
-            _ => throw new UnreachableException($"Value {attributeValue} is not supported!"),
+            _ => throw new UnreachableException($"Value {attributeValue} is not supported!")
         };
     }
 

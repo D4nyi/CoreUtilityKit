@@ -5,7 +5,9 @@ namespace CoreUtilityKit.UnitTests.Helpers;
 public sealed class ListExtensionTest
 {
     #region IsNullOrEmpty
+
     #region List
+
     [Fact]
     public void IsNullOrEmpty_ReturnsTrue_WhenListIsNull()
     {
@@ -47,9 +49,11 @@ public sealed class ListExtensionTest
         // Assert
         isNullOrEmpty.ShouldBeFalse();
     }
+
     #endregion
 
     #region Dictionary
+
     [Fact]
     public void IsNullOrEmpty_ReturnsTrue_WhenDictionaryIsNull()
     {
@@ -82,7 +86,7 @@ public sealed class ListExtensionTest
         // Arrange
         Dictionary<int, int> dict = new(1)
         {
-            { 1, 1 },
+            { 1, 1 }
         };
 
         // Act
@@ -91,9 +95,11 @@ public sealed class ListExtensionTest
         // Assert
         isNullOrEmpty.ShouldBeFalse();
     }
+
     #endregion
 
     #region Enumerable
+
     [Fact]
     public void IsNullOrEmpty_ReturnsTrue_WhenEnumerableIsNull()
     {
@@ -132,11 +138,15 @@ public sealed class ListExtensionTest
         // Assert
         isNullOrEmpty.ShouldBeFalse();
     }
+
     #endregion
+
     #endregion
 
     #region EmptyIfNull
+
     #region List
+
     [Fact]
     public void EmptyIfNull_ReturnsEmptyList_WhenInputNull()
     {
@@ -162,9 +172,11 @@ public sealed class ListExtensionTest
         // Assert
         emptyIfNull.ShouldBeSameAs(list);
     }
+
     #endregion
 
     #region Dictionary
+
     [Fact]
     public void EmptyIfNull_ReturnsEmptyDictionary_WhenInputNull()
     {
@@ -190,9 +202,11 @@ public sealed class ListExtensionTest
         // Assert
         emptyIfNull.ShouldBeSameAs(dict);
     }
+
     #endregion
 
     #region Enumerable
+
     [Fact]
     public void EmptyIfNull_ReturnsEmptyEnumerable_WhenInputNull()
     {
@@ -218,7 +232,9 @@ public sealed class ListExtensionTest
         // Assert
         emptyIfNull.ShouldBeSameAs(enumerable);
     }
+
     #endregion
+
     #endregion
 
     #region GetOrAdd
@@ -433,6 +449,7 @@ public sealed class ListExtensionTest
         success.ShouldBeFalse();
         dict.ShouldHaveSingleItem();
     }
+
     #endregion
 
     #region EquivalentTo

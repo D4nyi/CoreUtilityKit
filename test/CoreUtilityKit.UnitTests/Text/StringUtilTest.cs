@@ -9,6 +9,7 @@ public sealed class StringUtilTest
     private static readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
 
     #region InlineData
+
     [Theory]
     [InlineData("StringToBeNormalized")]
     [InlineData("StringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalized")]
@@ -41,6 +42,7 @@ public sealed class StringUtilTest
     }
 
     #region InlineData
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]
@@ -56,6 +58,7 @@ public sealed class StringUtilTest
     }
 
     #region InlineData
+
     [Theory]
     [InlineData("StringToBeNormalized")]
     [InlineData("StringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalizedStringToBeNormalized")]
@@ -88,6 +91,7 @@ public sealed class StringUtilTest
     }
 
     #region InlineData
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]
@@ -103,6 +107,7 @@ public sealed class StringUtilTest
     }
 
     #region InlineData
+
     [Theory]
     [InlineData(null, "")]
     [InlineData("", "")]
@@ -138,6 +143,7 @@ public sealed class StringUtilTest
     }
 
     #region InlineData
+
     [Theory]
     [InlineData("path?which*has:invalid|chars")]
     [InlineData("PATH?WHICH*HAS:INVALID|CHARS")]
@@ -157,6 +163,7 @@ public sealed class StringUtilTest
     }
 
     #region InlineData
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]

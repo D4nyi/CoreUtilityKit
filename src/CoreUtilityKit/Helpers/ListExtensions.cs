@@ -104,7 +104,7 @@ public static class ListExtensions
     {
         ArgumentNullException.ThrowIfNull(valueFactory);
 
-        return GetOrAdd(dict, key, valueFactory(key));
+        return dict.GetOrAdd(key, valueFactory(key));
     }
 
     /// <summary>Adds a key/value pair to the <see cref="Dictionary{TKey,TValue}"/> if the key does not already exist.</summary>
@@ -124,7 +124,7 @@ public static class ListExtensions
     {
         ArgumentNullException.ThrowIfNull(valueFactory);
 
-        return GetOrAdd(dict, key, valueFactory(key, factoryArgument));
+        return dict.GetOrAdd(key, valueFactory(key, factoryArgument));
     }
 
     /// <summary>Updates the value associated with <paramref name="key"/> to <paramref name="newValue"/> in the <see cref="Dictionary{TKey,TValue}"/>.</summary>
@@ -162,7 +162,7 @@ public static class ListExtensions
     {
         ArgumentNullException.ThrowIfNull(valueFactory);
 
-        return TryUpdate(dict, key, valueFactory(key));
+        return dict.TryUpdate(key, valueFactory(key));
     }
 
     /// <summary>Updates the value associated with <paramref name="key"/> to a newly generated value by <paramref name="valueFactory"/> in the <see cref="Dictionary{TKey,TValue}"/>.</summary>
@@ -181,7 +181,7 @@ public static class ListExtensions
     {
         ArgumentNullException.ThrowIfNull(valueFactory);
 
-        return TryUpdate(dict, key, valueFactory(key, factoryArgument));
+        return dict.TryUpdate(key, valueFactory(key, factoryArgument));
     }
 
     /// <summary>

@@ -197,6 +197,6 @@ public static class PasswordGenerator
         None = 0,
         Numbers,
         Uppers,
-        Lowers,
+        Lowers
     }
 }

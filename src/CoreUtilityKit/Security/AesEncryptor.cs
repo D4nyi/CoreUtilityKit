@@ -17,6 +17,10 @@ public static class AesEncryptor
     private const string SerializationUnreferencedCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed. Use the overload that takes a JsonTypeInfo or JsonSerializerContext, or make sure all of the required types are preserved.";
     private const string SerializationRequiresDynamicCodeMessage = "JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation. Use System.Text.Json source generation for native AOT applications.";
 
+    private const int SaltSize  = 32;
+    private const int TagSize   = 16;
+    private const int NonceSize = 12;
+
     private static readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web)
     {
         // Web defaults don't use the relax JSON escaping encoder.
@@ -29,10 +33,6 @@ public static class AesEncryptor
         ReferenceHandler = ReferenceHandler.IgnoreCycles,
         NumberHandling = JsonNumberHandling.Strict | JsonNumberHandling.AllowNamedFloatingPointLiterals
     };
-
-    private const int SaltSize  = 32;
-    private const int TagSize   = 16;
-    private const int NonceSize = 12;
 
     /// <summary>
     /// Serializes the given <typeparamref name="T"/> type to JSON then encrypts it with the given <paramref name="password"/>

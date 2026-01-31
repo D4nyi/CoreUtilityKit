@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace CoreUtilityKit.UnitTests.Helpers;
 
 public sealed class TaskExtensionsTest
@@ -29,7 +31,7 @@ public sealed class TaskExtensionsTest
         [
             Task.FromResult(0),
             Task.FromException<int>(new InvalidOperationException("ERROR!")),
-            Task.FromResult(2),
+            Task.FromResult(2)
         ];
 
         // Act
@@ -51,14 +53,14 @@ public sealed class TaskExtensionsTest
         [
             Run(cts.Token),
             Run(cts.Token),
-            Run(cts.Token),
+            Run(cts.Token)
         ];
 
         // Act
         Func<Task> action = () => TaskHelpers.WhenAll(tasks);
 
         // Assert
-        await action.ShouldThrowAsync<System.Diagnostics.UnreachableException>();
+        await action.ShouldThrowAsync<UnreachableException>();
 
         // Cleanup
         cts.Dispose();

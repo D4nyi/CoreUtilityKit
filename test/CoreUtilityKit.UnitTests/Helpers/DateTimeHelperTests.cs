@@ -23,7 +23,7 @@ public sealed class DateTimeHelperTests
         {
             new FakeTimeProvider(new DateTimeOffset(2024, 6, 1, 0, 0, 0, TimeSpan.Zero).AddTicks(-1)),
             new FakeTimeProvider(new DateTimeOffset(2024, 6, 1, 0, 0, 0, TimeSpan.Zero).AddTicks(-1))
-        },
+        }
     };
 
     public static readonly TheoryData<TimeProvider, int, TimeProvider> EndOfMonthAddData = new()
@@ -57,7 +57,7 @@ public sealed class DateTimeHelperTests
             new FakeTimeProvider(new DateTimeOffset(2024, 5, 31, 23, 59, 59, 999, 999, TimeSpan.Zero)),
             8,
             new FakeTimeProvider(new DateTimeOffset(2025, 2, 1, 0, 0, 0, TimeSpan.Zero).AddTicks(-1))
-        },
+        }
     };
 
     public static readonly TheoryData<TimeProvider, TimeProvider> BeginningOfMonthData = new()
@@ -77,7 +77,7 @@ public sealed class DateTimeHelperTests
         {
             new FakeTimeProvider(new DateTimeOffset(2024, 6, 1, 0, 0, 0, TimeSpan.Zero).AddTicks(-1)),
             new FakeTimeProvider(new DateTimeOffset(2024, 5, 1, 0, 0, 0, 0, 0, TimeSpan.Zero))
-        },
+        }
     };
 
     public static readonly TheoryData<TimeProvider, int, TimeProvider> BeginningOfMonthAddData = new()
@@ -111,7 +111,7 @@ public sealed class DateTimeHelperTests
             new FakeTimeProvider(new DateTimeOffset(2024, 6, 1, 0, 0, 0, TimeSpan.Zero).AddTicks(-1)),
             8,
             new FakeTimeProvider(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero))
-        },
+        }
     };
 
     public static readonly TheoryData<TimeProvider, int> PreviousMonthData = new()

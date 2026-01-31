@@ -7,6 +7,7 @@ public sealed class AesEncryptorTests
 {
     private const string Password = "SecretPassword123!";
     private const string StringToHash = "SomeRandomTextThatWillBeHashed";
+
     private static readonly TestData _objectToHash = new()
     {
         Id = 5,
@@ -14,6 +15,7 @@ public sealed class AesEncryptorTests
     };
 
     #region Encrypt Tests
+
     [Fact]
     public void Encrypt_ShouldHashAString_WhenStringIsValid()
     {
@@ -66,9 +68,11 @@ public sealed class AesEncryptorTests
         // Assert
         action.ShouldThrow<ArgumentNullException>();
     }
+
     #endregion
 
     #region EncryptAsJson Tests
+
     [Fact]
     public void EncryptAsJson_ShouldHashAObject_WhenObjectIsValid()
     {
@@ -117,9 +121,11 @@ public sealed class AesEncryptorTests
         // Assert
         action.ShouldThrow<ArgumentNullException>();
     }
+
     #endregion
 
     #region Decrypt Tests
+
     [Fact]
     public void Decrypt_ShouldHashAString_WhenStringIsValid()
     {
@@ -154,9 +160,11 @@ public sealed class AesEncryptorTests
         // Assert
         action.ShouldThrow<ArgumentNullException>();
     }
+
     #endregion
 
     #region DecryptFromJson Tests
+
     [Fact]
     public void DecryptFromJson_ShouldHashAString_WhenStringIsValid()
     {
@@ -196,5 +204,6 @@ public sealed class AesEncryptorTests
         // Assert
         action.ShouldThrow<ArgumentNullException>();
     }
+
     #endregion
 }
