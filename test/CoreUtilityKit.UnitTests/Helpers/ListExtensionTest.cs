@@ -1,3 +1,5 @@
+using CoreUtilityKit.UnitTests.DataGenerators;
+
 namespace CoreUtilityKit.UnitTests.Helpers;
 
 public sealed class ListExtensionTest
@@ -432,6 +434,19 @@ public sealed class ListExtensionTest
         dict.ShouldHaveSingleItem();
     }
     #endregion
+
+    #region EquivalentTo
+
+    [Theory]
+    [ClassData(typeof(DictionaryEqualGenerator))]
+    public void DictionaryEqual_HappyCase(Dictionary<int, int> first, Dictionary<int, int> second, bool expected)
+    {
+        // Act
+        bool success = first.EquivalentTo(second);
+
+        // Assert
+        success.ShouldBe(expected);
     }
+
     #endregion
 }

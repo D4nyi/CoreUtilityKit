@@ -119,7 +119,8 @@ public static class ListExtensions
     /// <exception cref="ArgumentNullException"><paramref name="dict"/> is a null reference.</exception>
     /// <exception cref="ArgumentNullException"><paramref name="key"/> is a null reference.</exception>
     /// <exception cref="ArgumentNullException"><paramref name="valueFactory"/> is a null reference.</exception>
-    public static TValue? GetOrAdd<TKey, TValue, TArg>(this Dictionary<TKey, TValue> dict, TKey key, Func<TKey, TArg, TValue> valueFactory, TArg factoryArgument) where TKey : notnull
+    public static TValue? GetOrAdd<TKey, TValue, TArg>(this Dictionary<TKey, TValue> dict, TKey key, Func<TKey, TArg, TValue> valueFactory, TArg factoryArgument)
+        where TKey : notnull
     {
         ArgumentNullException.ThrowIfNull(valueFactory);
 
@@ -181,5 +182,39 @@ public static class ListExtensions
         ArgumentNullException.ThrowIfNull(valueFactory);
 
         return TryUpdate(dict, key, valueFactory(key, factoryArgument));
+    }
+
+    /// <summary>
+    /// Determines whether two dictionaries are equivalent by comparing their keys and values.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the keys in the dictionaries.</typeparam>
+    /// <typeparam name="TValue">The type of the values in the dictionaries.</typeparam>
+    /// <param name="first">The first dictionary to compare.</param>
+    /// <param name="second">The second dictionary to compare.</param>
+    /// <param name="valueComparer">An optional equality comparer for the values. If null, the default equality comparer for <typeparamref name="TValue"/> is used.</param>
+    /// <returns><see langword="true"/> if the dictionaries are equivalent; otherwise, <see langword="false"/>.</returns>
+    public static bool EquivalentTo<TKey, TValue>(this Dictionary<TKey, TValue>? first, Dictionary<TKey, TValue>? second, IEqualityComparer<TValue>? valueComparer = null)
+        where TKey : notnull
+    {
+        if (ReferenceEquals(first, second)) return true;
+        if (first is null || second is null) return false;
+        if (first.Count != second.Count) return false;
+
+        valueComparer ??= EqualityComparer<TValue>.Default;
+
+        foreach ((TKey key, TValue value) in first)
+        {
+            if (!second.TryGetValue(key, out TValue? secondValue))
+            {
+                return false;
+            }
+
+            if (!valueComparer.Equals(value, secondValue))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
