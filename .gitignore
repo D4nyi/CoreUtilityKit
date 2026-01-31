@@ -1,5 +1,12 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
 # Build results
 [Bb]in/
 [Oo]bj/
@@ -15,3 +22,8 @@
 
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.[Dd]ot[Ss]ettings.user

@@ -39,7 +39,7 @@ public sealed class ReadonlyEnumAttributeCacheTests
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe("Readonly cache must not be empty! (Parameter 'dict')\r\nActual value was 0.");
+        ex.Message.ShouldBe($"Readonly cache must not be empty! (Parameter 'dict'){Environment.NewLine}Actual value was 0.");
         ex.ParamName.ShouldBe("dict");
     }
 

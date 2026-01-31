@@ -30,7 +30,7 @@ public sealed class GuardsThrowsTest
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe($"The specified parameter is outside the processable range! (Parameter 'number')\r\nActual value was {number}.");
+        ex.Message.ShouldBe($"The specified parameter is outside the processable range! (Parameter 'number'){Environment.NewLine}Actual value was {number}.");
         ex.ParamName.ShouldBe(nameof(number));
     }
 
@@ -74,7 +74,7 @@ public sealed class GuardsThrowsTest
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe("The collections length is out of range! (Parameter 'list')\r\nActual value was 0.");
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter 'list'){Environment.NewLine}Actual value was 0.");
         ex.ParamName.ShouldBe(nameof(list));
     }
 
@@ -96,7 +96,7 @@ public sealed class GuardsThrowsTest
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data'){Environment.NewLine}Actual value was {_data.Length}.");
         ex.ParamName.ShouldBe(nameof(_data));
     }
 
@@ -118,7 +118,7 @@ public sealed class GuardsThrowsTest
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data'){Environment.NewLine}Actual value was {_data.Length}.");
         ex.ParamName.ShouldBe(nameof(_data));
     }
 
@@ -140,7 +140,7 @@ public sealed class GuardsThrowsTest
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data'){Environment.NewLine}Actual value was {_data.Length}.");
         ex.ParamName.ShouldBe(nameof(_data));
     }
 
@@ -162,7 +162,7 @@ public sealed class GuardsThrowsTest
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data'){Environment.NewLine}Actual value was {_data.Length}.");
         ex.ParamName.ShouldBe(nameof(_data));
     }
 
@@ -184,7 +184,7 @@ public sealed class GuardsThrowsTest
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data'){Environment.NewLine}Actual value was {_data.Length}.");
         ex.ParamName.ShouldBe(nameof(_data));
     }
 
@@ -206,7 +206,7 @@ public sealed class GuardsThrowsTest
 
         // Assert
         var ex = action.ShouldThrow<ArgumentOutOfRangeException>();
-        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data')\r\nActual value was {_data.Length}.");
+        ex.Message.ShouldBe($"The collections length is out of range! (Parameter '_data'){Environment.NewLine}Actual value was {_data.Length}.");
         ex.ParamName.ShouldBe(nameof(_data));
     }
 

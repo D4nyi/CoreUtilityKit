@@ -6,7 +6,7 @@ internal sealed class InvalidEmailGenerator : TheoryData<string?>
     {
         Add(null);
         Add("");
-        Add("\r \t \n \r\n");
+        Add("\r \t \n {Environment.NewLine}");
         Add("example.com");
         Add("@example.com");
         Add("email@example.");
