@@ -9,6 +9,10 @@ internal sealed class DictionaryEqualGenerator : TheoryData<Dictionary<int, int>
         Dictionary<int, int> third = new() { { 2, 2 }, { 1, 1 } };
         Dictionary<int, int> fourth = new() { { 3, 3 }, { 4, 4 } };
 
+        Dictionary<int, int> fifth = new() { { 3, 3 }, { 4, 4 }, { 5, 5 } };
+        Dictionary<int, int> sixth = new() { { 3, 4 }, { 4, 5 } };
+
+
         Add(null, null, true);
         Add(first, first, true);
         Add(first, second, true);
@@ -19,5 +23,8 @@ internal sealed class DictionaryEqualGenerator : TheoryData<Dictionary<int, int>
         Add(null, first, false);
         Add(first, fourth, false);
         Add(third, fourth, false);
+
+        Add(fourth, fifth, false);
+        Add(fourth, sixth, false);
     }
 }
