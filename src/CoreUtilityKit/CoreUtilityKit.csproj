@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <PackageId>CoreUtilityKit</PackageId>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
