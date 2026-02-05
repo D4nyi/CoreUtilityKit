@@ -72,7 +72,6 @@ jobs:
 
   analyze:
     name: Analyze (${{ matrix.language }})
-    needs: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
