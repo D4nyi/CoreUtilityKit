@@ -105,7 +105,7 @@ jobs:
 
       - name: Manual Build
         if: matrix.build-mode == 'manual'
-        run: dotnet build ./FastEnumExtensions.sln --nologo -c ${{ env.BUILD_CONFIGURATION }}
+        run: dotnet build ./CoreUtilityKit.slnx --nologo -c ${{ env.BUILD_CONFIGURATION }}
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
