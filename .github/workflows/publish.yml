@@ -3,6 +3,10 @@
 
 name: Publish
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on: [ workflow_dispatch ]
 
 env:
@@ -13,6 +17,7 @@ env:
 jobs:
   publish:
     name: Publish
+    needs: analyze
     runs-on: ubuntu-latest
     steps:
       - name: Get Tags
@@ -29,27 +34,36 @@ jobs:
           echo "AllTags=${tags}" >> $GITHUB_ENV
       - name: Checkout Git
         uses: actions/checkout@v4
-      - name: Update Version
+      - name: Extract Versions
         run: |
-          releaseYear=$(date -u +"%Y")
-          buildTime=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          
-          versionCoreUtilityKit=$(sed -rn "s/\[assembly\: AssemblyVersion\(\"(.*)\"\)\]/\1/p" ./src/CoreUtilityKit/Properties/Assembly.cs)
-          sed -i -e "s/<Version>/${versionCoreUtilityKit}/" -e "s/<BuildTime>/${buildTime}/" -e "s/<ReleaseYear>/${releaseYear}/" ./src/CoreUtilityKit/Properties/Assembly.cs
-
-          versionValidation=$(sed -rn "s/\[assembly\: AssemblyVersion\(\"(.*)\"\)\]/\1/p" ./src/CoreUtilityKit.Validation/Properties/Assembly.cs)
-          sed -i -e "s/<Version>/${versionValidation}/" -e "s/<BuildTime>/${buildTime}/" -e "s/<ReleaseYear>/${releaseYear}/" ./src/CoreUtilityKit.Validation/Properties/Assembly.cs
+          versionCoreUtilityKit=$(sed -rn 's/.*<Version>(.*)<\/Version>.*/\1/p' ./src/CoreUtilityKit/CoreUtilityKit.csproj)
+          versionValidation=$(sed -rn 's/.*<Version>(.*)<\/Version>.*/\1/p' ./src/CoreUtilityKit.Validation/Properties/Assembly.cs)
 
           echo "CoreUtilityKit=${versionCoreUtilityKit}" >> $GITHUB_ENV
           echo "Validation=${versionValidation}" >> $GITHUB_ENV
-      - name: Build & Test
-        uses: D4nyi/CoreUtilityKit/.github/actions/build-n-test@dd01c63741330248b657d812e5f89c53ecf0cf40
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          configuration: ${{ env.BUILD_CONFIGURATION }}
+          dotnet-version: 10.0.x
+          dotnet-quality: ga
+      - name: Set DotNet Version
+        run: |
+          frameworkVersion=`echo 'net${{ matrix.dotnet-version }}' | sed 's/..$//'`
+          echo "Framework Version: ${frameworkVersion}"
+          echo "FrameworkVersion=${frameworkVersion}" >> $GITHUB_ENV
+      - name: Restore
+        run: dotnet restore ./CoreUtilityKit.slnx
+
+      - name: Build Solution
+        run: dotnet build ./CoreUtilityKit.slnx --no-restore --nologo -c ${{ env.BUILD_CONFIGURATION }} -f ${{ env.FrameworkVersion }}
+      - name: Run Unit Tests
+        run: dotnet test ./CoreUtilityKit.slnx --no-build --no-restore --nologo -c ${{ env.BUILD_CONFIGURATION }} -f ${{ env.FrameworkVersion }}
+
       - name: Pack CoreUtilityKit
-        run: dotnet pack ./src/CoreUtilityKit/CoreUtilityKit.csproj -c Release --no-build --no-restore --nologo -o output /p:PackageVersion=${{ env.CoreUtilityKit }}
+        run: dotnet pack ./src/CoreUtilityKit/CoreUtilityKit.csproj -c Release --no-build --no-restore --nologo -o output
       - name: Pack CoreUtilityKit.Validation
-        run: dotnet pack ./src/CoreUtilityKit.Validation/CoreUtilityKit.Validation.csproj -c Release --no-build --no-restore --nologo -o output /p:PackageVersion=${{ env.Validation }}
+        run: dotnet pack ./src/CoreUtilityKit.Validation/CoreUtilityKit.Validation.csproj -c Release --no-build --no-restore --nologo -o output
       - name: Git Tag
         uses: actions/github-script@v7
         with:
@@ -60,7 +74,7 @@ jobs:
                 Validation:     process.env.Validation
               };
               const allTags = JSON.parse(process.env.AllTags).map(x => x.ref);
-            
+
               console.log(versions);
               console.log(allTags);
 
@@ -68,24 +82,66 @@ jobs:
                 if (!value) {
                   continue;
                 }
-            
+
                 const ref = `refs/tags/${key}/v${value}`;
                 const exists = allTags.includes(ref);
                 console.log(exists ? 'Exists:' : 'Created:', ref);
-            
+
                 if (exists) {
                   continue;
                 }
-            
+
                 github.rest.git.createRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   ref: ref,
                   sha: context.sha
                 });
-              } 
+              }
             } catch (e) {
               console.error(e);
             }
       - name: Push to NuGet
         run: dotnet nuget push output/CoreUtilityKit*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+            build-mode: none
+          - language: csharp
+            build-mode: manual
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        if: matrix.language == 'csharp'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+          dotnet-quality: ga
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          dependency-caching: true
+
+      - name: Manual Build
+        if: matrix.build-mode == 'manual'
+        run: dotnet build ./FastEnumExtensions.sln --nologo -c ${{ env.BUILD_CONFIGURATION }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"
