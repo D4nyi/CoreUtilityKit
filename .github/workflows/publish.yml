@@ -3,55 +3,170 @@
 
 name: Publish
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on: [ workflow_dispatch ]
 
 env:
-  BUILD_CONFIGURATION: Release
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
 
 jobs:
-  publish:
-    name: Publish
+  get-tags:
+    name: Get Tags
     runs-on: ubuntu-latest
+    outputs:
+      Tags: ${{ steps.out.outputs.Tags }}
+      CoreUtilityKit: ${{ steps.out.outputs.CoreUtilityKit }}
+      Validation: ${{ steps.out.outputs.Validation }}
     steps:
       - name: Get Tags
         id: get_latest_release
         uses: octokit/request-action@v2.x
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           mediaType: 'application/json'
           route: GET /repos/${{ github.repository }}/git/matching-refs/tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Store Response
-        run: |
-          tags=$(tr -d '\n\t\r ' <<<$(echo ${{ toJSON(steps.get_latest_release.outputs.data) }} | sed -e 's/\\n//g'))
-          echo "AllTags=${tags}" >> $GITHUB_ENV
-      - name: Checkout Git
-        uses: actions/checkout@v4
-      - name: Update Version
-        run: |
-          releaseYear=$(date -u +"%Y")
-          buildTime=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          
-          versionCoreUtilityKit=$(sed -rn "s/\[assembly\: AssemblyVersion\(\"(.*)\"\)\]/\1/p" ./src/CoreUtilityKit/Properties/Assembly.cs)
-          sed -i -e "s/<Version>/${versionCoreUtilityKit}/" -e "s/<BuildTime>/${buildTime}/" -e "s/<ReleaseYear>/${releaseYear}/" ./src/CoreUtilityKit/Properties/Assembly.cs
 
-          versionValidation=$(sed -rn "s/\[assembly\: AssemblyVersion\(\"(.*)\"\)\]/\1/p" ./src/CoreUtilityKit.Validation/Properties/Assembly.cs)
-          sed -i -e "s/<Version>/${versionValidation}/" -e "s/<BuildTime>/${buildTime}/" -e "s/<ReleaseYear>/${releaseYear}/" ./src/CoreUtilityKit.Validation/Properties/Assembly.cs
+      - name: Checkout Git
+        uses: actions/checkout@v6
+
+      - name: Read versions
+        id: read_versions
+        run: |
+          versionCoreUtilityKit=$(sed -rn 's/.*<Version>(.*)<\/Version>.*/\1/p' ./src/CoreUtilityKit/CoreUtilityKit.csproj)
+
+          versionValidation=$(sed -rn 's/.*<Version>(.*)<\/Version>.*/\1/p' ./src/CoreUtilityKit.Validation/CoreUtilityKit.Validation.csproj)
 
           echo "CoreUtilityKit=${versionCoreUtilityKit}" >> $GITHUB_ENV
           echo "Validation=${versionValidation}" >> $GITHUB_ENV
-      - name: Build & Test
-        uses: D4nyi/CoreUtilityKit/.github/actions/build-n-test@dd01c63741330248b657d812e5f89c53ecf0cf40
+
+      - name: Store Response
+        id: out
+        run: |
+          tags=$(echo '${{ steps.get_latest_release.outputs.data }}' | jq -c '[.[].ref] | sort')
+
+          echo "Tags=${tags}" >> $GITHUB_OUTPUT
+          echo "CoreUtilityKit=${CoreUtilityKit}" >> $GITHUB_OUTPUT
+          echo "Validation=${Validation}" >> $GITHUB_OUTPUT
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
         with:
-          configuration: ${{ env.BUILD_CONFIGURATION }}
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+          dotnet-quality: ga
+
+      - name: Restore
+        run: dotnet restore ./CoreUtilityKit.slnx
+
+      - name: Build Solution
+        run: dotnet build ./CoreUtilityKit.slnx --no-restore --nologo -c Release
+
+      - name: Run Unit Tests
+        run: dotnet test ./CoreUtilityKit.slnx --no-build --no-restore --nologo -c Release
+
       - name: Pack CoreUtilityKit
-        run: dotnet pack ./src/CoreUtilityKit/CoreUtilityKit.csproj -c Release --no-build --no-restore --nologo -o output /p:PackageVersion=${{ env.CoreUtilityKit }}
+        run: dotnet pack ./src/CoreUtilityKit/CoreUtilityKit.csproj -c Release --no-build --no-restore --nologo -o output
+
       - name: Pack CoreUtilityKit.Validation
-        run: dotnet pack ./src/CoreUtilityKit.Validation/CoreUtilityKit.Validation.csproj -c Release --no-build --no-restore --nologo -o output /p:PackageVersion=${{ env.Validation }}
+        run: dotnet pack ./src/CoreUtilityKit.Validation/CoreUtilityKit.Validation.csproj -c Release --no-build --no-restore --nologo -o output
+
+      - name: Save NuGet Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-CoreUtilityKits
+          path: ./output/CoreUtilityKit*.nupkg
+          retention-days: 1
+
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+            build-mode: none
+          - language: csharp
+            build-mode: manual
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        if: matrix.language == 'csharp'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+          dotnet-quality: ga
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          dependency-caching: true
+
+      - name: Manual Build
+        if: matrix.build-mode == 'manual'
+        run: dotnet build ./CoreUtilityKit.slnx --nologo -c Release
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"
+
+  publish:
+    name: Publish
+    needs: [build, analyze, get-tags]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET
+        id: dotnet
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+          dotnet-quality: ga
+
+      - name: Restore Env
+        env:
+          Tags: ${{ needs.get-tags.outputs.Tags }}
+          CoreUtilityKit: ${{ needs.get-tags.outputs.CoreUtilityKit }}
+          Validation: ${{ needs.get-tags.outputs.Validation }}
+        run: |
+          echo "Tags=${Tags}" >> $GITHUB_ENV
+          echo "CoreUtilityKit=${CoreUtilityKit}" >> $GITHUB_ENV
+          echo "Validation=${Validation}" >> $GITHUB_ENV
+
+      - name: Restore NuGet Package
+        id: restore
+        uses: actions/download-artifact@v7
+        with:
+          name: nuget-CoreUtilityKits
+          path: ./output
+
+      - name: Push to NuGet
+        run: dotnet nuget push output/CoreUtilityKit*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+
       - name: Git Tag
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             try {
@@ -59,33 +174,31 @@ jobs:
                 CoreUtilityKit: process.env.CoreUtilityKit,
                 Validation:     process.env.Validation
               };
-              const allTags = JSON.parse(process.env.AllTags).map(x => x.ref);
-            
+              const tags = JSON.parse(process.env.Tags);
+
               console.log(versions);
-              console.log(allTags);
+              console.log(tags);
 
               for (const [key, value] of Object.entries(versions)) {
                 if (!value) {
                   continue;
                 }
-            
+
                 const ref = `refs/tags/${key}/v${value}`;
-                const exists = allTags.includes(ref);
+                const exists = tags.includes(ref);
                 console.log(exists ? 'Exists:' : 'Created:', ref);
-            
+
                 if (exists) {
                   continue;
                 }
-            
+
                 github.rest.git.createRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   ref: ref,
                   sha: context.sha
                 });
-              } 
+              }
             } catch (e) {
               console.error(e);
             }
-      - name: Push to NuGet
-        run: dotnet nuget push output/CoreUtilityKit*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
