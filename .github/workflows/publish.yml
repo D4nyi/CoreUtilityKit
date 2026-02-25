@@ -17,6 +17,8 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.tests.outputs.versions }}
     steps:
       - name: Checkout Git
         uses: actions/checkout@v6
@@ -29,57 +31,19 @@ jobs:
             10.0.x
           dotnet-quality: ga
 
+      - name: Read Versions
+        id: read-versions
+        uses: D4nyi/DotNet-Actions/readProjectVersions@fix-errors
+        with:
+          source_dir: ./src
+
       - name: Tests
         uses: D4nyi/DotNet-Actions/runTests@fix-errors
 
-  analyze:
-    name: Analyze (${{ matrix.language }})
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - language: actions
-            build-mode: none
-          - language: csharp
-            build-mode: manual
-    permissions:
-      security-events: write
-      packages: read
-      actions: read
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Setup .NET
-        if: matrix.language == 'csharp'
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.0.x
-          dotnet-quality: ga
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
-        with:
-          languages: ${{ matrix.language }}
-          build-mode: ${{ matrix.build-mode }}
-          dependency-caching: true
-
-      - name: Manual Build
-        if: matrix.build-mode == 'manual'
-        run: dotnet build ./CoreUtilityKit.slnx --nologo -c Release
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
-        with:
-          category: "/language:${{ matrix.language }}"
-
-  read-tags:
-    name: Get Tags
-    runs-on: ubuntu-latest
+  publish:
+    name: Publish
     needs: [tests, analyze]
-    outputs:
-      tags: ${{ steps.read-tags.outputs.tags }}
+    runs-on: ubuntu-latest
     steps:
       - name: Read Tags
         id: read-tags
@@ -87,27 +51,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  read-versions:
-    name: Read Version
-    runs-on: ubuntu-latest
-    needs: [tests, analyze]
-    outputs:
-      versions: ${{ steps.read-versions.outputs.versions }}
-    steps:
-      - name: Checkout Git
-        uses: actions/checkout@v6
-
-      - name: Read Versions
-        id: read-versions
-        uses: D4nyi/DotNet-Actions/readProjectVersions@fix-errors
-        with:
-          source_dir: ./src
-
-  publish:
-    name: Publish
-    needs: [read-tags, read-versions]
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout Git
         uses: actions/checkout@v6
 
@@ -124,4 +67,4 @@ jobs:
           nuget_api_key: ${{ secrets.NUGET_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tags: ${{ needs.read-tags.outputs.tags }}
-          versions: ${{ needs.read-versions.outputs.versions }}
+          versions: ${{ needs.tests.outputs.versions }}
