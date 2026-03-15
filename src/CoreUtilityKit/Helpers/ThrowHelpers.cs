@@ -13,6 +13,7 @@ internal static class ThrowHelpers
             CultureInfo.InvariantCulture,
             "Input string was not in a correct format. Failure to parse near offset {0}. {1}",
             offset, resource);
+
         throw new FormatException(message);
     }
 

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace CoreUtilityKit.Text;
 
+/// <summary>
+/// Provides extension methods for string manipulation, including normalization, slug creation, and sanitizing file names.
+/// </summary>
 public static class StringUtils
 {
     private const char Replacer = '_';
@@ -12,6 +15,11 @@ public static class StringUtils
     private const int LoweringMask = 0x20;
     private const int UpperingMask = 0x5F;
 
+    /// <summary>
+    /// Normalizes the specified string to uppercase and removes non-spacing marks (accents).
+    /// </summary>
+    /// <param name="value">The string to normalize.</param>
+    /// <returns>The normalized uppercase string, or <see cref="String.Empty"/> if the input is null or whitespace.</returns>
     public static string NormalizeToUpper(this string? value)
     {
         if (String.IsNullOrWhiteSpace(value))
@@ -36,6 +44,11 @@ public static class StringUtils
         });
     }
 
+    /// <summary>
+    /// Normalizes the specified string to the lowercase and removes non-spacing marks (accents).
+    /// </summary>
+    /// <param name="value">The string to normalize.</param>
+    /// <returns>The normalized lowercase string, or <see cref="String.Empty"/> if the input is null or whitespace.</returns>
     public static string NormalizeToLower(this string? value)
     {
         if (String.IsNullOrWhiteSpace(value))
@@ -58,6 +71,11 @@ public static class StringUtils
         });
     }
 
+    /// <summary>
+    /// Creates a URL-friendly slug from the specified string.
+    /// </summary>
+    /// <param name="value">The string to convert to a slug.</param>
+    /// <returns>A slug representation of the string, or <see cref="String.Empty"/> if the input is null or whitespace.</returns>
     public static string CreateSlug(this string? value)
     {
         if (String.IsNullOrWhiteSpace(value))
@@ -78,6 +96,11 @@ public static class StringUtils
         return new string(slug[..charsWritten]);
     }
 
+    /// <summary>
+    /// Replaces invalid file name characters in the specified string with an underscore.
+    /// </summary>
+    /// <param name="value">The string to sanitize.</param>
+    /// <returns>A sanitized string suitable for a file name, or <see cref="String.Empty"/> if the input is null or whitespace.</returns>
     public static string ReplaceInvalidFileChars(this string? value)
     {
         if (String.IsNullOrWhiteSpace(value))

@@ -2,16 +2,39 @@ using System.Runtime.CompilerServices;
 
 namespace CoreUtilityKit.Helpers;
 
+/// <summary>
+/// Provides extension methods for date and time calculations.
+/// </summary>
 public static class DateTimeHelper
 {
     #region NextYear
 
+    /// <summary>
+    /// Gets the next year from the specified <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="dateOnly">The date.</param>
+    /// <returns>The year after the specified date's year.</returns>
     public static int NextYear(this DateOnly dateOnly) => dateOnly.Year + 1;
 
+    /// <summary>
+    /// Gets the next year from the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>The year after the specified date's year.</returns>
     public static int NextYear(this DateTime dateTime) => dateTime.Year + 1;
 
+    /// <summary>
+    /// Gets the next year from the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>The year after the specified date's year.</returns>
     public static int NextYear(this DateTimeOffset dateTimeOffset) => dateTimeOffset.Year + 1;
 
+    /// <summary>
+    /// Gets the next year from the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The year after the current year.</returns>
     public static int NextYear(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -23,12 +46,32 @@ public static class DateTimeHelper
 
     #region PreviousYear
 
+    /// <summary>
+    /// Gets the previous year from the specified <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="dateOnly">The date.</param>
+    /// <returns>The year before the specified date's year.</returns>
     public static int PreviousYear(this DateOnly dateOnly) => dateOnly.Year - 1;
 
+    /// <summary>
+    /// Gets the previous year from the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>The year before the specified date's year.</returns>
     public static int PreviousYear(this DateTime dateTime) => dateTime.Year - 1;
 
+    /// <summary>
+    /// Gets the previous year from the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>The year before the specified date's year.</returns>
     public static int PreviousYear(this DateTimeOffset dateTimeOffset) => dateTimeOffset.Year - 1;
 
+    /// <summary>
+    /// Gets the previous year from the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The year before the current year.</returns>
     public static int PreviousYear(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -40,12 +83,32 @@ public static class DateTimeHelper
 
     #region NextMonth
 
+    /// <summary>
+    /// Gets the next month from the specified <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="dateOnly">The date.</param>
+    /// <returns>The month after the specified date's month (1-12).</returns>
     public static int NextMonth(this DateOnly dateOnly) => (dateOnly.Month % 12) + 1;
 
+    /// <summary>
+    /// Gets the next month from the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>The month after the specified date's month (1-12).</returns>
     public static int NextMonth(this DateTime dateTime) => (dateTime.Month % 12) + 1;
 
+    /// <summary>
+    /// Gets the next month from the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>The month after the specified date's month (1-12).</returns>
     public static int NextMonth(this DateTimeOffset dateTimeOffset) => (dateTimeOffset.Month % 12) + 1;
 
+    /// <summary>
+    /// Gets the next month from the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The month after the current month (1-12).</returns>
     public static int NextMonth(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -57,12 +120,32 @@ public static class DateTimeHelper
 
     #region PreviousMonth
 
+    /// <summary>
+    /// Gets the previous month from the specified <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="dateOnly">The date.</param>
+    /// <returns>The month before the specified date's month (1-12).</returns>
     public static int PreviousMonth(this DateOnly dateOnly) => PreviousMonthCore(dateOnly.Month);
 
+    /// <summary>
+    /// Gets the previous month from the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>The month before the specified date's month (1-12).</returns>
     public static int PreviousMonth(this DateTime dateTime) => PreviousMonthCore(dateTime.Month);
 
+    /// <summary>
+    /// Gets the previous month from the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>The month before the specified date's month (1-12).</returns>
     public static int PreviousMonth(this DateTimeOffset dateTimeOffset) => PreviousMonthCore(dateTimeOffset.Month);
 
+    /// <summary>
+    /// Gets the previous month from the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The month before the current month (1-12).</returns>
     public static int PreviousMonth(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -77,6 +160,11 @@ public static class DateTimeHelper
 
     #region NextDay
 
+    /// <summary>
+    /// Gets the next day from the specified <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="dateOnly">The date.</param>
+    /// <returns>The day after the specified date's day of the month.</returns>
     public static int NextDay(this DateOnly dateOnly)
     {
         int daysInCurrentMonth = DateTime.DaysInMonth(dateOnly.Year, dateOnly.Month);
@@ -84,6 +172,11 @@ public static class DateTimeHelper
         return (dateOnly.Day % daysInCurrentMonth) + 1;
     }
 
+    /// <summary>
+    /// Gets the next day from the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>The day after the specified date's day of the month.</returns>
     public static int NextDay(this DateTime dateTime)
     {
         int daysInCurrentMonth = DateTime.DaysInMonth(dateTime.Year, dateTime.Month);
@@ -91,6 +184,11 @@ public static class DateTimeHelper
         return (dateTime.Day % daysInCurrentMonth) + 1;
     }
 
+    /// <summary>
+    /// Gets the next day from the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>The day after the specified date's day of the month.</returns>
     public static int NextDay(this DateTimeOffset dateTimeOffset)
     {
         int daysInCurrentMonth = DateTime.DaysInMonth(dateTimeOffset.Year, dateTimeOffset.Month);
@@ -98,6 +196,11 @@ public static class DateTimeHelper
         return (dateTimeOffset.Day % daysInCurrentMonth) + 1;
     }
 
+    /// <summary>
+    /// Gets the next day from the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The day after the current day of the month.</returns>
     public static int NextDay(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -109,12 +212,32 @@ public static class DateTimeHelper
 
     #region PreviousDay
 
+    /// <summary>
+    /// Gets the previous day from the specified <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="dateOnly">The date.</param>
+    /// <returns>The day before the specified date's day of the month.</returns>
     public static int PreviousDay(this DateOnly dateOnly) => PreviousDayCore(dateOnly.Year, dateOnly.Month, dateOnly.Day);
 
+    /// <summary>
+    /// Gets the previous day from the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>The day before the specified date's day of the month.</returns>
     public static int PreviousDay(this DateTime dateTime) => PreviousDayCore(dateTime.Year, dateTime.Month, dateTime.Day);
 
+    /// <summary>
+    /// Gets the previous day from the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>The day before the specified date's day of the month.</returns>
     public static int PreviousDay(this DateTimeOffset dateTimeOffset) => PreviousDayCore(dateTimeOffset.Year, dateTimeOffset.Month, dateTimeOffset.Day);
 
+    /// <summary>
+    /// Gets the previous day from the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The day before the current day of the month.</returns>
     public static int PreviousDay(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -129,12 +252,32 @@ public static class DateTimeHelper
 
     #region NextDayOfWeek
 
+    /// <summary>
+    /// Gets the next day of the week from the specified <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="dateOnly">The date.</param>
+    /// <returns>The <see cref="DayOfWeek"/> after the specified date's day of the week.</returns>
     public static DayOfWeek NextDayOfWeek(this DateOnly dateOnly) => (DayOfWeek)(((int)dateOnly.DayOfWeek + 1) % 7);
 
+    /// <summary>
+    /// Gets the next day of the week from the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>The <see cref="DayOfWeek"/> after the specified date's day of the week.</returns>
     public static DayOfWeek NextDayOfWeek(this DateTime dateTime) => (DayOfWeek)(((int)dateTime.DayOfWeek + 1) % 7);
 
+    /// <summary>
+    /// Gets the next day of the week from the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>The <see cref="DayOfWeek"/> after the specified date's day of the week.</returns>
     public static DayOfWeek NextDayOfWeek(this DateTimeOffset dateTimeOffset) => (DayOfWeek)(((int)dateTimeOffset.DayOfWeek + 1) % 7);
 
+    /// <summary>
+    /// Gets the next day of the week from the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The <see cref="DayOfWeek"/> after the current day of the week.</returns>
     public static DayOfWeek NextDayOfWeek(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -142,18 +285,43 @@ public static class DateTimeHelper
         return NextDayOfWeek(timeProvider.GetUtcNow());
     }
 
+    /// <summary>
+    /// Gets the next day of the week from the specified <see cref="DayOfWeek"/>.
+    /// </summary>
+    /// <param name="dayOfWeek">The day of the week.</param>
+    /// <returns>The <see cref="DayOfWeek"/> after the specified day of the week.</returns>
     public static DayOfWeek NextDayOfWeek(this DayOfWeek dayOfWeek) => (DayOfWeek)(((int)dayOfWeek + 1) % 7);
 
     #endregion
 
     #region PreviousDayOfWeek
 
+    /// <summary>
+    /// Gets the previous day of the week from the specified <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="dateOnly">The date.</param>
+    /// <returns>The <see cref="DayOfWeek"/> before the specified date's day of the week.</returns>
     public static DayOfWeek PreviousDayOfWeek(this DateOnly dateOnly) => PreviousDayOfWeek(dateOnly.DayOfWeek);
 
+    /// <summary>
+    /// Gets the previous day of the week from the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>The <see cref="DayOfWeek"/> before the specified date's day of the week.</returns>
     public static DayOfWeek PreviousDayOfWeek(this DateTime dateTime) => PreviousDayOfWeek(dateTime.DayOfWeek);
 
+    /// <summary>
+    /// Gets the previous day of the week from the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>The <see cref="DayOfWeek"/> before the specified date's day of the week.</returns>
     public static DayOfWeek PreviousDayOfWeek(this DateTimeOffset dateTimeOffset) => PreviousDayOfWeek(dateTimeOffset.DayOfWeek);
 
+    /// <summary>
+    /// Gets the previous day of the week from the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>The <see cref="DayOfWeek"/> before the current day of the week.</returns>
     public static DayOfWeek PreviousDayOfWeek(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -161,12 +329,22 @@ public static class DateTimeHelper
         return PreviousDayOfWeek(timeProvider.GetUtcNow());
     }
 
+    /// <summary>
+    /// Gets the previous day of the week from the specified <see cref="DayOfWeek"/>.
+    /// </summary>
+    /// <param name="dayOfWeek">The day of the week.</param>
+    /// <returns>The <see cref="DayOfWeek"/> before the specified day of the week.</returns>
     public static DayOfWeek PreviousDayOfWeek(this DayOfWeek dayOfWeek) => (DayOfWeek)(((int)dayOfWeek + 6) % 7);
 
     #endregion
 
     #region EndOfMonth
 
+    /// <summary>
+    /// Gets the end of the month for the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>A <see cref="DateTime"/> representing the last tick of the month.</returns>
     public static DateTime EndOfMonth(this DateTime dateTime)
     {
         int daysInCurrentMonth = DateTime.DaysInMonth(dateTime.Year, dateTime.Month);
@@ -176,6 +354,11 @@ public static class DateTimeHelper
         return new DateTime(ticks, dateTime.Kind);
     }
 
+    /// <summary>
+    /// Gets the end of the month for the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>A <see cref="DateTimeOffset"/> representing the last tick of the month.</returns>
     public static DateTimeOffset EndOfMonth(this DateTimeOffset dateTimeOffset)
     {
         int daysInCurrentMonth = DateTime.DaysInMonth(dateTimeOffset.Year, dateTimeOffset.Month);
@@ -185,6 +368,12 @@ public static class DateTimeHelper
         return new DateTimeOffset(ticks, dateTimeOffset.Offset);
     }
 
+    /// <summary>
+    /// Gets the end of the month after adding the specified number of months to the <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <param name="months">The number of months to add.</param>
+    /// <returns>A <see cref="DateTime"/> representing the last tick of the calculated month.</returns>
     public static DateTime EndOfMonth(this DateTime dateTime, int months)
     {
         DateTime newDate = dateTime.AddMonths(months);
@@ -196,6 +385,12 @@ public static class DateTimeHelper
         return new DateTime(ticks, dateTime.Kind);
     }
 
+    /// <summary>
+    /// Gets the end of the month after adding the specified number of months to the <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <param name="months">The number of months to add.</param>
+    /// <returns>A <see cref="DateTimeOffset"/> representing the last tick of the calculated month.</returns>
     public static DateTimeOffset EndOfMonth(this DateTimeOffset dateTimeOffset, int months)
     {
         DateTimeOffset newDate = dateTimeOffset.AddMonths(months);
@@ -207,6 +402,11 @@ public static class DateTimeHelper
         return new DateTimeOffset(ticks, dateTimeOffset.Offset);
     }
 
+    /// <summary>
+    /// Gets the end of the current month provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>A <see cref="DateTimeOffset"/> representing the last tick of the current month.</returns>
     public static DateTimeOffset EndOfMonth(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -214,6 +414,12 @@ public static class DateTimeHelper
         return EndOfMonth(timeProvider.GetUtcNow());
     }
 
+    /// <summary>
+    /// Gets the end of the month after adding the specified number of months to the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <param name="months">The number of months to add.</param>
+    /// <returns>A <see cref="DateTimeOffset"/> representing the last tick of the calculated month.</returns>
     public static DateTimeOffset EndOfMonth(this TimeProvider timeProvider, int months)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -254,6 +460,11 @@ public static class DateTimeHelper
 
     #region BeginningOfMonth
 
+    /// <summary>
+    /// Gets the beginning of the month for the specified <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <returns>A <see cref="DateTime"/> representing the first tick of the month.</returns>
     public static DateTime BeginningOfMonth(this DateTime dateTime)
     {
         long ticks = CalcBeginningOfMonthTicks((ulong)dateTime.Ticks);
@@ -261,6 +472,11 @@ public static class DateTimeHelper
         return new DateTime(ticks, dateTime.Kind);
     }
 
+    /// <summary>
+    /// Gets the beginning of the month for the specified <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <returns>A <see cref="DateTimeOffset"/> representing the first tick of the month.</returns>
     public static DateTimeOffset BeginningOfMonth(this DateTimeOffset dateTimeOffset)
     {
         long ticks = CalcBeginningOfMonthTicks((ulong)dateTimeOffset.Ticks);
@@ -268,6 +484,12 @@ public static class DateTimeHelper
         return new DateTimeOffset(ticks, dateTimeOffset.Offset);
     }
 
+    /// <summary>
+    /// Gets the beginning of the month after adding the specified number of months to the <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="dateTime">The date and time.</param>
+    /// <param name="months">The number of months to add.</param>
+    /// <returns>A <see cref="DateTime"/> representing the first tick of the calculated month.</returns>
     public static DateTime BeginningOfMonth(this DateTime dateTime, int months)
     {
         DateTime newDate = dateTime.AddMonths(months);
@@ -277,6 +499,12 @@ public static class DateTimeHelper
         return new DateTime(ticks, dateTime.Kind);
     }
 
+    /// <summary>
+    /// Gets the beginning of the month after adding the specified number of months to the <see cref="DateTimeOffset"/>.
+    /// </summary>
+    /// <param name="dateTimeOffset">The date and time offset.</param>
+    /// <param name="months">The number of months to add.</param>
+    /// <returns>A <see cref="DateTimeOffset"/> representing the first tick of the calculated month.</returns>
     public static DateTimeOffset BeginningOfMonth(this DateTimeOffset dateTimeOffset, int months)
     {
         DateTimeOffset newDate = dateTimeOffset.AddMonths(months);
@@ -286,6 +514,11 @@ public static class DateTimeHelper
         return new DateTimeOffset(ticks, dateTimeOffset.Offset);
     }
 
+    /// <summary>
+    /// Gets the beginning of the current month provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <returns>A <see cref="DateTimeOffset"/> representing the first tick of the current month.</returns>
     public static DateTimeOffset BeginningOfMonth(this TimeProvider timeProvider)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -293,6 +526,12 @@ public static class DateTimeHelper
         return BeginningOfMonth(timeProvider.GetUtcNow());
     }
 
+    /// <summary>
+    /// Gets the beginning of the month after adding the specified number of months to the current time provided by <see cref="TimeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">The time provider.</param>
+    /// <param name="months">The number of months to add.</param>
+    /// <returns>A <see cref="DateTimeOffset"/> representing the first tick of the calculated month.</returns>
     public static DateTimeOffset BeginningOfMonth(this TimeProvider timeProvider, int months)
     {
         ArgumentNullException.ThrowIfNull(timeProvider);
@@ -351,7 +590,7 @@ public static class DateTimeHelper
         // DaysPer400Years = DaysPer100Years * 4 + 1; // 146097
         const int DaysPer400Years = 146_097;
 
-        // Constants used for fast calculation of following subexpressions
+        // Constants used for fast calculation of the following subexpressions
         //      x / DaysPer4Years
         //      x % DaysPer4Years / 4
         // EafMultiplier = (uint)(((1UL << 32) + DaysPer4Years - 1) / DaysPer4Years); // 2,939,745

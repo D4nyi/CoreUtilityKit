@@ -1,15 +1,23 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-
 using CoreUtilityKit.Text;
 
 namespace CoreUtilityKit.Helpers;
 
+/// <summary>
+/// Provides extension methods for URL-related operations, such as combining paths.
+/// </summary>
 public static class UrlExtensions
 {
     private const char UrlSeparatorChar = '/';
     private const string UrlSeparatorCharAsString = "/";
 
+    /// <summary>
+    /// Combines two URL paths into one, ensuring a single separator between them.
+    /// </summary>
+    /// <param name="path1">The first path.</param>
+    /// <param name="path2">The second path.</param>
+    /// <returns>The combined URL path.</returns>
     public static string Combine(string path1, string path2)
     {
         ArgumentNullException.ThrowIfNull(path1);
@@ -18,6 +26,13 @@ public static class UrlExtensions
         return CombineInternal(path1, path2);
     }
 
+    /// <summary>
+    /// Combines three URL paths into one, ensuring a single separator between them.
+    /// </summary>
+    /// <param name="path1">The first path.</param>
+    /// <param name="path2">The second path.</param>
+    /// <param name="path3">The third path.</param>
+    /// <returns>The combined URL path.</returns>
     public static string Combine(string path1, string path2, string path3)
     {
         ArgumentNullException.ThrowIfNull(path1);
@@ -27,6 +42,14 @@ public static class UrlExtensions
         return CombineInternal(path1, path2, path3);
     }
 
+    /// <summary>
+    /// Combines four URL paths into one, ensuring a single separator between them.
+    /// </summary>
+    /// <param name="path1">The first path.</param>
+    /// <param name="path2">The second path.</param>
+    /// <param name="path3">The third path.</param>
+    /// <param name="path4">The fourth path.</param>
+    /// <returns>The combined URL path.</returns>
     public static string Combine(string path1, string path2, string path3, string path4)
     {
         ArgumentNullException.ThrowIfNull(path1);
@@ -37,6 +60,11 @@ public static class UrlExtensions
         return CombineInternal(path1, path2, path3, path4);
     }
 
+    /// <summary>
+    /// Combines an array of URL paths into one, ensuring a single separator between them.
+    /// </summary>
+    /// <param name="paths">The array of paths to combine.</param>
+    /// <returns>The combined URL path.</returns>
     public static string Combine(params string[] paths)
     {
         ArgumentNullException.ThrowIfNull(paths);
@@ -189,6 +217,7 @@ public static class UrlExtensions
             third = third[1..];
         }
 
+#pragma warning disable CS8500
         JoinInternalState state = new()
         {
             ReadOnlySpanPtr1 = (IntPtr)(&first),
@@ -227,6 +256,7 @@ public static class UrlExtensions
                 Debug.Assert(third.Length == destination.Length);
                 third.CopyTo(destination);
             });
+#pragma warning restore CS8500
     }
 
     private static unsafe string JoinInternal(ReadOnlySpan<char> first, ReadOnlySpan<char> second, ReadOnlySpan<char> third, ReadOnlySpan<char> fourth)
@@ -258,6 +288,7 @@ public static class UrlExtensions
             fourth = fourth[1..];
         }
 
+#pragma warning disable CS8500
         JoinInternalState state = new()
         {
             ReadOnlySpanPtr1 = (IntPtr)(&first),
@@ -308,6 +339,7 @@ public static class UrlExtensions
                 Debug.Assert(fourth.Length == destination.Length);
                 fourth.CopyTo(destination);
             });
+#pragma warning restore CS8500
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
