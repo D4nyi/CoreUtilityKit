@@ -9,6 +9,12 @@ namespace CoreUtilityKit.Text;
 
 public ref partial struct ValueStringBuilder
 {
+    /// <summary>
+    /// Inserts a specified number of instances of a character at a specified index in this instance.
+    /// </summary>
+    /// <param name="index">The position where the insertion begins.</param>
+    /// <param name="value">The character to insert.</param>
+    /// <param name="count">The number of times to insert <paramref name="value"/>.</param>
     public void Insert(int index, char value, int count)
     {
         if (_pos > _chars.Length - count)
@@ -22,6 +28,11 @@ public ref partial struct ValueStringBuilder
         _pos += count;
     }
 
+    /// <summary>
+    /// Inserts a string at a specified index in this instance.
+    /// </summary>
+    /// <param name="index">The position where the insertion begins.</param>
+    /// <param name="s">The string to insert.</param>
     public void Insert(int index, string? s)
     {
         if (s is null)
@@ -43,6 +54,10 @@ public ref partial struct ValueStringBuilder
         _pos += count;
     }
 
+    /// <summary>
+    /// Appends a character to this instance.
+    /// </summary>
+    /// <param name="c">The character to append.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(char c)
     {
@@ -59,6 +74,11 @@ public ref partial struct ValueStringBuilder
         }
     }
 
+    /// <summary>
+    /// Appends a specified number of instances of a character to this instance.
+    /// </summary>
+    /// <param name="c">The character to append.</param>
+    /// <param name="count">The number of times to append <paramref name="c"/>.</param>
     public void Append(char c, int count)
     {
         if (_pos > _chars.Length - count)
@@ -75,6 +95,10 @@ public ref partial struct ValueStringBuilder
         _pos += count;
     }
 
+    /// <summary>
+    /// Appends a string to this instance.
+    /// </summary>
+    /// <param name="s">The string to append.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(string? s)
     {
@@ -102,6 +126,13 @@ public ref partial struct ValueStringBuilder
         }
     }
 
+    /// <summary>
+    /// Appends the string returned by processing a composite format string, which contains zero or more format items, to this instance.
+    /// Each format item is replaced by the string representation of a corresponding argument in a parameter array.
+    /// </summary>
+    /// <param name="provider">An object that supplies culture-specific formatting information.</param>
+    /// <param name="format">A composite format string.</param>
+    /// <param name="args">A span of objects to format.</param>
     [ExcludeFromCodeCoverage(Justification = "Too complex to test and it is copied from Microsoft")]
     public void AppendFormat(IFormatProvider? provider, [StringSyntax(StringSyntaxAttribute.CompositeFormat)] string format, ReadOnlySpan<object?> args)
     {
@@ -371,6 +402,10 @@ public ref partial struct ValueStringBuilder
         }
     }
 
+    /// <summary>
+    /// Appends a read-only span of characters to this instance.
+    /// </summary>
+    /// <param name="value">The read-only span of characters to append.</param>
     public void Append(scoped ReadOnlySpan<char> value)
     {
         int pos = _pos;
@@ -383,6 +418,11 @@ public ref partial struct ValueStringBuilder
         _pos += value.Length;
     }
 
+    /// <summary>
+    /// Appends a span of a specified length to this instance and returns a reference to the span, which can be used to write data directly into the instance.
+    /// </summary>
+    /// <param name="length">The length of the span to append.</param>
+    /// <returns>A span representing the appended space.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Span<char> AppendSpan(int length)
     {
@@ -396,6 +436,13 @@ public ref partial struct ValueStringBuilder
         return _chars.Slice(origPos, length);
     }
 
+    /// <summary>
+    /// Appends the string representation of a value that implements <see cref="ISpanFormattable"/> to this instance.
+    /// </summary>
+    /// <typeparam name="T">The type of the value to append.</typeparam>
+    /// <param name="value">The value to append.</param>
+    /// <param name="format">A standard or custom format string.</param>
+    /// <param name="provider">An object that supplies culture-specific formatting information.</param>
     public void AppendSpanFormattable<T>(T value, string? format = null, IFormatProvider? provider = null) where T : ISpanFormattable
     {
         if (value.TryFormat(_chars[_pos..], out int charsWritten, format.AsSpan(), provider))
@@ -408,6 +455,10 @@ public ref partial struct ValueStringBuilder
         }
     }
 
+    /// <summary>
+    /// Appends a Unicode scalar value to this instance.
+    /// </summary>
+    /// <param name="rune">The Unicode scalar value to append.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(Rune rune)
     {

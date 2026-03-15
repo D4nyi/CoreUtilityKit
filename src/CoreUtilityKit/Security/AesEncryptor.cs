@@ -117,13 +117,13 @@ public static class AesEncryptor
     }
 
     /// <summary>
-    /// Decrypts a <paramref name="hash"/> that originally was a JSON string and maps it to the provided <typeparamref name="T"/> type
+    /// Decrypts a <paramref name="hash"/> that originally was a JSON string and maps it to the provided <typeparamref name="T"/> type.
     /// </summary>
-    /// <typeparam name="T">A type to which the decrypted JSON should be mapped</typeparam>
-    /// <param name="hash">A string that should be decrypted</param>
-    /// <param name="password">The private key that used to encrypt the data</param>
-    /// <param name="options">JSON serializer options</param>
-    /// <returns></returns>
+    /// <typeparam name="T">A type to which the decrypted JSON should be mapped.</typeparam>
+    /// <param name="hash">A string that should be decrypted.</param>
+    /// <param name="password">The private key that used to encrypt the data.</param>
+    /// <param name="options">JSON serializer options.</param>
+    /// <returns>The decrypted and deserialized object, or the default value of <typeparamref name="T"/> if the hash is null or empty.</returns>
     /// <exception cref="ArgumentException" />
     /// <exception cref="ArgumentNullException" />
     /// <exception cref="CryptographicException" />

@@ -4,7 +4,7 @@ internal sealed class InvalidEmailGenerator : TheoryData<string?>
 {
     public InvalidEmailGenerator()
     {
-        Add(null);
+        Add((string?)null);
         Add("");
         Add("\r \t \n {Environment.NewLine}");
         Add("example.com");

@@ -54,6 +54,10 @@ public static partial class Guards
         return true;
     }
 
+    /// <summary>
+    /// Gets a <see cref="Regex"/> that validates a strong password.
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> object.</returns>
     [GeneratedRegex(PasswordValidation, Options, TimeoutMilliseconds)]
     public static partial Regex PasswordRegex();
 }

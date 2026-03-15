@@ -97,6 +97,10 @@ public static partial class Guards
         return true;
     }
 
+    /// <summary>
+    /// Gets a <see cref="Regex"/> that validates an email address.
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> object.</returns>
     [GeneratedRegex(EmailValidation2, Options, TimeoutMilliseconds)]
     public static partial Regex EmailRegex();
 }

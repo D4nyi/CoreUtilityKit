@@ -5,6 +5,9 @@ namespace CoreUtilityKit.EnumAttributionCache.Abstraction;
 /// </summary>
 public interface IReadonlyEnumAttributeCache
 {
+    /// <summary>
+    /// Gets the number of elements in the cache.
+    /// </summary>
     int Count { get; }
 
     /// <summary>Determines whether the cache contains the specified key.</summary>

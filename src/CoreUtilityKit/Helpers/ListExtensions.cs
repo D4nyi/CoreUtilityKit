@@ -69,7 +69,7 @@ public static class ListExtensions
     /// <summary>Adds a key/value pair to the <see cref="Dictionary{TKey,TValue}"/> if the key does not already exist.</summary>
     /// <param name="dict">The dictionary from which to read a value or add to it.</param>
     /// <param name="key">The key of the element to add.</param>
-    /// <param name="value">The value to be added, if the key does not already exist.</param>
+    /// <param name="value">The value to be added if the key does not already exist.</param>
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
     /// <returns>The value for the key. This will be either the existing value for the key if the key is already in the dictionary, or the new value if the key was not in the dictionary.</returns>
@@ -191,14 +191,17 @@ public static class ListExtensions
     /// <typeparam name="TValue">The type of the values in the dictionaries.</typeparam>
     /// <param name="first">The first dictionary to compare.</param>
     /// <param name="second">The second dictionary to compare.</param>
-    /// <param name="valueComparer">An optional equality comparer for the values. If null, the default equality comparer for <typeparamref name="TValue"/> is used.</param>
+    /// <param name="valueComparer">An optional equality comparer to the values. If null, the default equality comparer for <typeparamref name="TValue"/> is used.</param>
     /// <returns><see langword="true"/> if the dictionaries are equivalent; otherwise, <see langword="false"/>.</returns>
     public static bool EquivalentTo<TKey, TValue>(this Dictionary<TKey, TValue>? first, Dictionary<TKey, TValue>? second, IEqualityComparer<TValue>? valueComparer = null)
         where TKey : notnull
     {
-        if (ReferenceEquals(first, second)) return true;
-        if (first is null || second is null) return false;
-        if (first.Count != second.Count) return false;
+        if (ReferenceEquals(first, second))
+            return true;
+        if (first is null || second is null)
+            return false;
+        if (first.Count != second.Count)
+            return false;
 
         valueComparer ??= EqualityComparer<TValue>.Default;
 

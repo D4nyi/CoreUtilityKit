@@ -61,35 +61,34 @@ public static class PasswordGenerator
         Span<byte> buf = stackalloc byte[length * 2];
         RandomNumberGenerator.Fill(buf);
 
-        Span<byte> specialCharPos = stackalloc byte[specialChars];
-        RandomNumberGenerator.Fill(specialCharPos);
+        while (specialChars != 0)
+        {
+            int pwdIndex = RandomNumberGenerator.GetInt32(length);
+            int punctuationsIndex = RandomNumberGenerator.GetInt32(PunctuationCount);
 
-        _ = RandomNumberGenerator.GetInt32(10);
+            ref char currentPasswordChar = ref password[pwdIndex];
+            if (currentPasswordChar != Char.MinValue)
+            {
+                continue;
+            }
+
+            currentPasswordChar = _punctuations[punctuationsIndex];
+
+            specialChars--;
+        }
 
         int numbers  = 0;
         int lowers   = 0;
         int uppers   = 0;
 
-        bool needsSpecials     = true;
-        byte iter              = 0;
-        int  nextEmptyPosition = 0;
-        while (nextEmptyPosition != length)
+        byte iter = 0;
+        int position = 0;
+        while (position != length)
         {
-            int pos = needsSpecials
-                ? RandomNumberGenerator.GetInt32(length)
-                : nextEmptyPosition;
-
-            ref char currentPasswordChar = ref password[pos];
+            ref char currentPasswordChar = ref password[position];
             if (currentPasswordChar != Char.MinValue)
             {
-                nextEmptyPosition++;
-                continue;
-            }
-
-            if (needsSpecials)
-            {
-                currentPasswordChar = _punctuations[RandomNumberGenerator.GetInt32(_punctuations.Length)];
-                needsSpecials = --specialChars == 0;
+                position++;
                 continue;
             }
 
@@ -122,7 +121,7 @@ public static class PasswordGenerator
             }
 
             iter++;
-            nextEmptyPosition++;
+            position++;
         }
 
         Change change = WhatToChange(numbers, uppers, lowers);

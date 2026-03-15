@@ -23,7 +23,7 @@ public sealed class AgeHelperTests
     public void CalculateDateTimeBirthYear_ValidAge_ReturnsCorrectYear(int age)
     {
         // Arrange
-        int expectedYear = DateTime.UtcNow.Year - age;
+        int expectedYear = Constants.TimeProvider.GetUtcNow().Year - age;
         DateTime expected = new(expectedYear, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         // Act
@@ -51,7 +51,7 @@ public sealed class AgeHelperTests
     public void CalculateBirthYear_ValidAge_ReturnsCorrectYear(int age)
     {
         // Arrange
-        int expected = DateTime.UtcNow.Year - age;
+        int expected = Constants.TimeProvider.GetUtcNow().Year - age;
 
         // Act
         int result = _ageHelper.CalculateBirthYear(age);
@@ -98,7 +98,7 @@ public sealed class AgeHelperTests
 
     [Theory]
     [ClassData(typeof(AgeHelperDateTimeOffsetGenerator))]
-    public void CalculateAge_DateTimeOffset_HappyCase(DateTime dateTimeOff, int expectedAge)
+    public void CalculateAge_DateTimeOffset_HappyCase(DateTimeOffset dateTimeOff, int expectedAge)
     {
         // Act
         int age = _ageHelper.CalculateAge(dateTimeOff);

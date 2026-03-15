@@ -456,7 +456,7 @@ public sealed class ListExtensionTest
 
     [Theory]
     [ClassData(typeof(DictionaryEqualGenerator))]
-    public void DictionaryEqual_HappyCase(Dictionary<int, int> first, Dictionary<int, int> second, bool expected)
+    public void DictionaryEqual_HappyCase(Dictionary<int, int>? first, Dictionary<int, int>? second, bool expected)
     {
         // Act
         bool success = first.EquivalentTo(second);

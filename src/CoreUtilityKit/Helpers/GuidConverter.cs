@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace CoreUtilityKit.Helpers;
 
+/// <summary>
+/// Provides methods for converting between <see cref="Guid"/> and its Base64 string representation.
+/// </summary>
 public static class GuidConverter
 {
     private const char Equal             = '=';
@@ -14,13 +17,23 @@ public static class GuidConverter
     private const byte PlusByte          = (byte)'+';  // 43
     private const string EmptyGuidBase64 = "AAAAAAAAAAAAAAAAAAAAAA";
 
+    /// <summary>
+    /// Parses a Base64 string into a <see cref="Guid"/>.
+    /// </summary>
+    /// <param name="id">The Base64 string representation of a GUID.</param>
+    /// <returns>A <see cref="Guid"/> parsed from the string, or <see cref="Guid.Empty"/> if the string is null or empty.</returns>
     public static Guid Parse(string? id)
     {
-        return id is null
+        return String.IsNullOrWhiteSpace(id)
             ? Guid.Empty
             : Parse(id.AsSpan());
     }
 
+    /// <summary>
+    /// Parses a Base64 character span into a <see cref="Guid"/>.
+    /// </summary>
+    /// <param name="id">The Base64 character span representation of a GUID.</param>
+    /// <returns>A <see cref="Guid"/> parsed from the span, or <see cref="Guid.Empty"/> if the span length is not 22.</returns>
     public static Guid Parse(ReadOnlySpan<char> id)
     {
         if (id.Length != 22)
@@ -51,6 +64,11 @@ public static class GuidConverter
         return new Guid(bytes);
     }
 
+    /// <summary>
+    /// Converts a <see cref="Guid"/> to its Base64 string representation.
+    /// </summary>
+    /// <param name="id">The <see cref="Guid"/> to convert.</param>
+    /// <returns>A Base64 string representation of the <see cref="Guid"/>.</returns>
     public static string ToBase64String(Guid id)
     {
         if (id == Guid.Empty)
