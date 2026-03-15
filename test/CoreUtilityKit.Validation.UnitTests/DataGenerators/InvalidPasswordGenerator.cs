@@ -4,7 +4,7 @@ internal sealed class InvalidPasswordGenerator : TheoryData<string?>
 {
     public InvalidPasswordGenerator()
     {
-        Add(null);
+        Add((string?)null);
         Add("");
         Add(" ");
         Add("\r");

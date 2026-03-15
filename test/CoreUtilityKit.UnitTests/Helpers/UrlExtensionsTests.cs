@@ -8,10 +8,10 @@ public sealed class UrlExtensionsTests
 
     [Theory]
     [ClassData(typeof(UrlHelpers2ParamThrowsGenerator))]
-    public void Combine_2Params_Throws(string path1, string path2)
+    public void Combine_2Params_Throws(string? path1, string? path2)
     {
         // Arrange
-        Action action = () => UrlExtensions.Combine(path1, path2);
+        Action action = () => UrlExtensions.Combine(path1!, path2!);
 
         // Act & Assert
         action.ShouldThrow<ArgumentNullException>();
@@ -56,10 +56,10 @@ public sealed class UrlExtensionsTests
 
     [Theory]
     [ClassData(typeof(UrlHelpers3ParamThrowsGenerator))]
-    public void Combine_3Params_Throws(string path1, string path2, string path3)
+    public void Combine_3Params_Throws(string? path1, string? path2, string? path3)
     {
         // Arrange
-        Action action = () => UrlExtensions.Combine(path1, path2, path3);
+        Action action = () => UrlExtensions.Combine(path1!, path2!, path3!);
 
         // Act & Assert
         action.ShouldThrow<ArgumentNullException>();
@@ -99,10 +99,10 @@ public sealed class UrlExtensionsTests
 
     [Theory]
     [ClassData(typeof(UrlHelpers4ParamThrowsGenerator))]
-    public void Combine_4Params_Throws(string path1, string path2, string path3, string path4)
+    public void Combine_4Params_Throws(string? path1, string? path2, string? path3, string? path4)
     {
         // Arrange
-        Action action = () => UrlExtensions.Combine(path1, path2, path3, path4);
+        Action action = () => UrlExtensions.Combine(path1!, path2!, path3!, path4!);
 
         // Act & Assert
         action.ShouldThrow<ArgumentNullException>();

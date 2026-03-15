@@ -33,21 +33,21 @@ public sealed class GuidConverterTest
         result.ShouldBe(Guid.Empty);
     }
 
-    [Fact]
-    public void Parse_ShouldReturnEmptyGuid_WhenInputIsANullString()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("\t\r\n")]
+    public void Parse_ShouldReturnEmptyGuid_WhenInputIsANullOrWhitespaceString(string? value)
     {
-        // Arrange
-        string? base64 = null;
-
         // Act
-        Guid result = GuidConverter.Parse(base64);
+        Guid result = GuidConverter.Parse(value);
 
         // Assert
         result.ShouldBe(Guid.Empty);
     }
 
     [Theory]
-    [InlineData("")]
     [InlineData("AAAAAAAAAAAAAAAAAAAAA")]   // 21
     [InlineData("AAAAAAAAAAAAAAAAAAAAAAA")] // 23
     public void Parse_ShouldReturnEmptyGuid_WhenInputHasNotHaveTheCorrectLength(string base64)

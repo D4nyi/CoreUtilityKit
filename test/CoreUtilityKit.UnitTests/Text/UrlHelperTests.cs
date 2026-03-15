@@ -4,9 +4,9 @@ namespace CoreUtilityKit.UnitTests.Text;
 
 public sealed class UrlHelperTests
 {
-    public static readonly TheoryData<Dictionary<string, string>?> StringValueData = [ [], null ];
+    public static readonly TheoryData<Dictionary<string, string>?> StringValueData = [ new Dictionary<string, string>(), (Dictionary<string, string>?)null! ];
 
-    public static readonly TheoryData<Dictionary<string, int>?> NumberValueData = [ [], null ];
+    public static readonly TheoryData<Dictionary<string, int>?> NumberValueData = [ new Dictionary<string, int>(), (Dictionary<string, int>?)null! ];
 
     [Fact]
     public void ToQueryString_ShouldCreateCorrectQueryString_HappyCase()
