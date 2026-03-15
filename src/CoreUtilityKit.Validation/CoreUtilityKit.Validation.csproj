@@ -1,8 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <PackageId>CoreUtilityKit.Validation</PackageId>
-    <Version>1.2.0</Version>
-    <InformationalVersion>1.2.0 Built: 2026-02-05T17:25:29Z</InformationalVersion>
-    <Copyright>Copyright © 2026. Dániel Szöllősi</Copyright>
-  </PropertyGroup>
+    <PropertyGroup>
+        <PackageId>CoreUtilityKit.Validation</PackageId>
+        <Version>1.2.1</Version>
+        <InformationalVersion>1.2.1 Built: 2026-03-15T11:15:40Z</InformationalVersion>
+        <Copyright>Copyright © 2026. Dániel Szöllősi</Copyright>
+        <PackageReleaseNotes>
+            - All public methods are correctly documented.
+ - Package updates.
+        </PackageReleaseNotes>
+    </PropertyGroup>
 </Project>
