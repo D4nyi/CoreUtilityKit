@@ -81,8 +81,10 @@ public sealed class EnumAttributeReaderFactoryTests
 
         static bool EquivalentTo(IReadOnlyDictionary<Color, string>? first, Dictionary<Enum, string>? second)
         {
-            if (first is null || second is null) return false;
-            if (first.Count != second.Count) return false;
+            if (first is null || second is null)
+                return false;
+            if (first.Count != second.Count)
+                return false;
 
             foreach ((Color key, string? value) in first)
             {

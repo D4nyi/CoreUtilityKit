@@ -1,4 +1,4 @@
-﻿
+
 namespace CoreUtilityKit.Helpers;
 
 /// <summary>

@@ -196,9 +196,12 @@ public static class ListExtensions
     public static bool EquivalentTo<TKey, TValue>(this Dictionary<TKey, TValue>? first, Dictionary<TKey, TValue>? second, IEqualityComparer<TValue>? valueComparer = null)
         where TKey : notnull
     {
-        if (ReferenceEquals(first, second)) return true;
-        if (first is null || second is null) return false;
-        if (first.Count != second.Count) return false;
+        if (ReferenceEquals(first, second))
+            return true;
+        if (first is null || second is null)
+            return false;
+        if (first.Count != second.Count)
+            return false;
 
         valueComparer ??= EqualityComparer<TValue>.Default;
 

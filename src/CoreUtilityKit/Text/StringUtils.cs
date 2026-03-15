@@ -164,7 +164,7 @@ public static class StringUtils
                 slug[i++] = (char)Rune.ToLowerInvariant(runeChar).Value;
                 previousIsReplacer = false;
             }
-            else if(runeChar.Value != Replacer && !previousIsReplacer)
+            else if (runeChar.Value != Replacer && !previousIsReplacer)
             {
                 slug[i++] = Replacer;
                 previousIsReplacer = true;
